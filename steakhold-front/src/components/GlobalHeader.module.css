@@ -4,21 +4,23 @@
 	align-items: center;
 }
 
-.contentFlex1 {
+.flex1 {
 	flex: 1;
 }
 
-.contentFlex2 {
+.flex2 {
 	flex: 2;
 	height: 100%;
 }
 
-.contentFlex3 {
+.flex3 {
 	flex: 3;
 }
 
-.headerContent {
-	padding: 1rem;
+.header {
+	min-width: 95px;
+	margin-inline: 1rem;
+	background-color: var(--background);
 }
 
 .line {
@@ -29,20 +31,28 @@
 }
 
 .title {
-	background: url("../../public/SteakHoldTitle.svg") no-repeat fixed center;
-	height: 100%;
-	width: 100%;
+	background: url("../../public/SteakHoldText.svg") no-repeat;
+	background-size: contain;
+  background-position: center;
+  height: var(--header-size);
+  aspect-ratio: 4;
+	margin-inline: 1rem;
 }
 
 .agriLifeLogo {
-	background: url("../../public/AgriLifeLogo.svg") no-repeat fixed center;
-	width: 160px;
-	height: 50px;
+	background: url("../../public/AgriLifeLogo.svg") no-repeat;
+	background-size: contain;
+  background-position: center;
+  height: var(--header-size);
+  aspect-ratio: 3;
+	margin-inline: 1rem;
 }
 
 .csLogo {
-	display: block;
-	background: url("../../public/tamuCSLogo.svg") no-repeat fixed center;
-	width: 160px;
-	height: 50px;
+  background: url("../../public/tamuCSLogo.svg") no-repeat;
+  background-size: contain;
+  background-position: center;
+  height: var(--header-size);
+  aspect-ratio: 3;
+	margin-inline: 1rem;
 }

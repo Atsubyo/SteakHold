@@ -2,6 +2,7 @@
   --background: #FFF7EA;
   --foreground: #603000;
   --emphasis: #43260A;
+  --header-size: 40px;
 }
 
 /* @media (prefers-color-scheme: dark) {
