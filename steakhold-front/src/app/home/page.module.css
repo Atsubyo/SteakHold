@@ -1,4 +1,18 @@
 .body {
-	overflow: "hidden";
-	background-color: var(--background);
+	background: var(--background);
+}
+
+.headerSpacer {
+  width: 200px;
+}
+
+.optimizerMenu {
+	margin-inline: 1rem;
+	background: var(--background);
+}
+
+.beefStageMenu {
+  width: 125px;
+	margin-inline: 1rem;
+	background: var(--background);
 }
