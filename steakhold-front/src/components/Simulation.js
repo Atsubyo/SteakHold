@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import OperationModel from "./OperationModel";
+import { PiCowFill } from "react-icons/pi";
 
 const LHM = [50, 100, 2, 0.001, 100, 130];
 
@@ -45,12 +46,18 @@ const Simulation = () => {
               position: "absolute",
               top: `${cow.location.y}%`,
               left: `${cow.location.x}%`,
-              width: "10px",
-              height: "10px",
+              width: "${(cow.weight+10)/10}px",
+              height: "${(cow.weight+10)/10}px",
+
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+
               backgroundColor: cow.health > 0 ? "green" : "red", // Green for healthy, red for dead
               borderRadius: "50%",
             }}
           >
+            <PiCowFill size={(cow.weight+10)/10} color="white" weight="bold" />
             {/* Optionally: You can add more visual details here */}
           </div>
         ))}
