@@ -106,7 +106,18 @@ const Home: React.FC = () => {
 		<Layout className={styles.body}>
 			<Header style={headerStyle}>
 				<Flex justify="space-between" align="center">
-					<div className={`${styles.headerSpacer}`} />
+					<Dropdown
+						menu={{ items: beefProcessingStage, onClick: beefStageOnClick }}
+						trigger={["click"]}
+						className={`${styles.beefStageMenu} ${styles.headerSpacer}`}
+					>
+						<Button onClick={(e) => e.preventDefault()}>
+							<Space>
+								{beefStage}
+								<DownOutlined />
+							</Space>
+						</Button>
+					</Dropdown>
 					{optimizer}
 					<Dropdown
 						menu={{ items: optimizerMenu, onClick: optimizerOnClick }}
@@ -124,18 +135,6 @@ const Home: React.FC = () => {
 			</Header>
 			<Content style={contentStyle}>
 				<Flex>
-					<Dropdown
-						menu={{ items: beefProcessingStage, onClick: beefStageOnClick }}
-						trigger={["click"]}
-						className={`${styles.beefStageMenu}`}
-					>
-						<Button onClick={(e) => e.preventDefault()}>
-							<Space>
-								{beefStage}
-								<DownOutlined />
-							</Space>
-						</Button>
-					</Dropdown>
 					Body for {beefStage} and {optimizer}
 				</Flex>
 			</Content>
