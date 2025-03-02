@@ -137,7 +137,16 @@ const Home: React.FC = () => {
 							</Space>
 						</Button>
 					</Dropdown>
-					<PheromoneModel></PheromoneModel>
+					<div className="glitch-embed-wrap" style={{ height: 420, width: "100%" }}>
+					<iframe
+						src="https://glitch.com/embed/#!/embed/cows-capstone?path=index.html&previewSize=0"
+						title="Cows-Capstone on Glitch"
+						allow="geolocation; microphone; camera; midi; encrypted-media; xr-spatial-tracking; fullscreen"
+						allowFullScreen=""
+						style={{ height: "100%", width: "100%", border: 0 }}
+					></iframe>
+					</div>
+					{/* <PheromoneModel></PheromoneModel> */}
 				</Flex>
 			</Content>
 		</Layout>
