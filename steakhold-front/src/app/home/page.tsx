@@ -5,6 +5,7 @@ import styles from "./page.module.css";
 import { DownOutlined } from "@ant-design/icons";
 import { Button, Dropdown, Flex, Layout, MenuProps, Space } from "antd";
 import { BeefStageType, OptimizerType } from "@/types/ParameterTypes";
+import Simulation from "@/components/Simulation";
 
 const { Header, Content } = Layout;
 
@@ -136,7 +137,7 @@ const Home: React.FC = () => {
 							</Space>
 						</Button>
 					</Dropdown>
-					Body for {beefStage} and {optimizer}
+					<Simulation></Simulation>
 				</Flex>
 			</Content>
 		</Layout>
