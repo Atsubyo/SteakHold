@@ -18,7 +18,7 @@ class OperationModel {
     this.num_cows = num_cows;
     this.growth_rate = growth_rate; // ADG (average daily gain);
     this.death_rate = death_rate;
-    this.daily_death_rate = 1 - Math.pow(death_rate, 1 / max_days);
+    this.daily_death_rate = 1 - Math.pow(1 - death_rate, 1 / max_days);
     this.max_days = max_days;
     this.target_weight = max_days * growth_rate + initial_weight;
     this.sale_price = sale_price;
@@ -45,7 +45,7 @@ class OperationModel {
         this.sellCow(cow.id);
       }
     });
-    this.cows = this.cows.filter((cow) => !cow.isAlive);
+    this.cows = this.cows.filter((cow) => cow.isAlive);
   }
 
   sellCow(id) {
