@@ -1,23 +1,31 @@
 import { useEffect, useState } from "react";
 import OperationModel from "./OperationModel";
 
+const LHM = [50, 100, 2, 0.001, 100, 130];
+
 const Simulation = () => {
-  const [operationModel] = useState(new OperationModel());
+  const [operationModel] = useState(new OperationModel(...LHM));
   const [cows, setCows] = useState([]);
+  const [day, setDay] = useState(0);
 
   useEffect(() => {
-    // Add cows to the farm when component mounts
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 100; i++) {
       operationModel.addCow();
     }
-
     const interval = setInterval(() => {
-      operationModel.step(); // Simulate the farm model
-      setCows([...operationModel.cows]); // Update cows state
-    }, 1000); // Update farm every second
+      operationModel.step();
+      setDay((prevDay) => {
+        const newDay = prevDay + 1;
+        if (newDay >= operationModel.max_days) {
+          clearInterval(interval);
+        }
+        return newDay;
+      });
+      setCows([...operationModel.cows]);
+    }, 100);
 
-    return () => clearInterval(interval); // Cleanup on unmount
-  }, [operationModel]);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div>

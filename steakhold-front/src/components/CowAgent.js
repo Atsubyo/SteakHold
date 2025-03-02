@@ -1,38 +1,24 @@
 class CowAgent {
-  constructor(id) {
+  constructor(id, weight) {
     this.id = id;
     this.age = 0;
-    this.health = 100;
-    this.location = { x: Math.random() * 100, y: Math.random() * 100 }; // Random position
+    this.isAlive = true;
+    this.weight = weight;
+    this.location = { x: Math.random() * 100, y: Math.random() * 100 };
   }
 
-  // Method to simulate aging
-  ageCow() {
-    this.age += 1;
-    if (this.age > 5 && Math.random() < 0.5) {
-      // 50% chance to get sick after age 5
-      this.getSick();
-    }
+  grow(adg) {
+    this.age++;
+    this.weight += adg;
   }
 
-  // Method for a cow getting sick
-  getSick() {
-    this.health -= 25; // Decrease health by 25
-    if (Math.random() < 0.25) {
-      // 25% chance to die
-      this.die();
-    }
-  }
-
-  // Method for a cow dying
   die() {
-    this.health = 0;
+    this.isAlive = false;
     console.log(`Cow ${this.id} has died.`);
   }
 
-  // Method to simulate movement
   move() {
-    this.location.x += (Math.random() - 0.5) * 10; // Small random movement
+    this.location.x += (Math.random() - 0.5) * 10;
     this.location.y += (Math.random() - 0.5) * 10;
   }
 }
