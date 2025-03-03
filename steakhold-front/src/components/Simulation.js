@@ -71,18 +71,18 @@ const Simulation = () => {
               position: "absolute",
               top: `${cow.location.y}%`,
               left: `${cow.location.x}%`,
-              width: "${(cow.weight+10)/10}px",
-              height: "${(cow.weight+10)/10}px",
+              width: `${(cow.weight+30)/10}px`,
+              height: `${(cow.weight+30)/10}px`,
 
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
 
-              backgroundColor: cow.health > 0 ? "green" : "red", // Green for healthy, red for dead
+              backgroundColor: cow.isAlive ? "green" : "red", // Green for healthy, red for dead
               borderRadius: "50%",
             }}
           >
-            <PiCowFill size={(cow.weight+10)/10} color="white" weight="bold" />
+            <PiCowFill size={(cow.weight+30)/10} color="white" weight="bold" />
             {/* Optionally: You can add more visual details here */}
           </div>
         ))}
