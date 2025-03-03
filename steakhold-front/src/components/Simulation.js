@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
 import OperationModel from "./OperationModel";
+import { Button } from "antd";
 
 const LHM = [50, 100, 2, 0.001, 100, 130];
 
-const Simulation = () => {
-  const [operationModel] = useState(new OperationModel(...LHM));
+const Simulation = (props) => {
+  const operationName = props.operationName || "Low Health Management Cow Calf";
+  const [operationModel, setOperationModel] = useState(
+    new OperationModel(...LHM)
+  );
   const [cows, setCows] = useState([]);
   const [day, setDay] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
@@ -12,10 +16,11 @@ const Simulation = () => {
 
   const startSimulation = () => {
     if (isRunning) return;
-    for (let i = 0; i < 100; i++) {
-      operationModel.addCow();
+    if (day === 0) {
+      for (let i = 0; i < 100; i++) {
+        operationModel.addCow();
+      }
     }
-
     const interval = setInterval(() => {
       operationModel.step();
       setDay((prevDay) => {
@@ -33,7 +38,6 @@ const Simulation = () => {
     setIsRunning(true);
   };
 
-  // Stop the simulation
   const stopSimulation = () => {
     if (intervalId) {
       clearInterval(intervalId);
@@ -46,15 +50,15 @@ const Simulation = () => {
     if (intervalId) {
       clearInterval(intervalId);
     }
-    operationModel.reset(); // Assuming OperationModel has a reset method to reset the model
-    setDay(0);
+    setOperationModel(new OperationModel(...LHM));
     setCows([]);
+    setDay(0);
     setIsRunning(false);
   };
 
   return (
     <div>
-      <h2>Farm Visualizer</h2>
+      <h2>{operationName} Operation Visualizer</h2>
       <div
         style={{
           position: "relative",
@@ -79,18 +83,25 @@ const Simulation = () => {
         ))}
       </div>
 
-      <div>
-        <button onClick={startSimulation} disabled={isRunning}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          columnGap: "16px",
+          padding: "16px",
+        }}
+      >
+        <Button onClick={startSimulation} disabled={isRunning}>
           Start
-        </button>
-        <button onClick={stopSimulation} disabled={!isRunning}>
-          Stop
-        </button>
-        <button onClick={resetSimulation} disabled={isRunning}>
+        </Button>
+        <Button onClick={stopSimulation} disabled={!isRunning}>
+          Pause
+        </Button>
+        <Button onClick={resetSimulation} disabled={isRunning}>
           Reset
-        </button>
+        </Button>
       </div>
-      <div>Day: {day}</div>
+      <p>Day: {day}</p>
     </div>
   );
 };

@@ -137,7 +137,7 @@ const Home: React.FC = () => {
 							</Space>
 						</Button>
 					</Dropdown>
-					<Simulation></Simulation>
+					<Simulation operationName={beefStage}></Simulation>
 				</Flex>
 			</Content>
 		</Layout>
