@@ -8,25 +8,50 @@ const Simulation = () => {
   const [operationModel] = useState(new OperationModel(...LHM));
   const [cows, setCows] = useState([]);
   const [day, setDay] = useState(0);
+  const [isRunning, setIsRunning] = useState(false);
+  const [intervalId, setIntervalId] = useState(null);
 
-  useEffect(() => {
+  const startSimulation = () => {
+    if (isRunning) return;
     for (let i = 0; i < 100; i++) {
       operationModel.addCow();
     }
+
     const interval = setInterval(() => {
       operationModel.step();
       setDay((prevDay) => {
         const newDay = prevDay + 1;
         if (newDay >= operationModel.max_days) {
           clearInterval(interval);
+          setIsRunning(false);
         }
         return newDay;
       });
       setCows([...operationModel.cows]);
     }, 100);
 
-    return () => clearInterval(interval);
-  }, []);
+    setIntervalId(interval);
+    setIsRunning(true);
+  };
+
+  // Stop the simulation
+  const stopSimulation = () => {
+    if (intervalId) {
+      clearInterval(intervalId);
+      setIsRunning(false);
+    }
+  };
+
+  // Reset the simulation
+  const resetSimulation = () => {
+    if (intervalId) {
+      clearInterval(intervalId);
+    }
+    operationModel.reset(); // Assuming OperationModel has a reset method to reset the model
+    setDay(0);
+    setCows([]);
+    setIsRunning(false);
+  };
 
   return (
     <div>
@@ -62,6 +87,19 @@ const Simulation = () => {
           </div>
         ))}
       </div>
+
+      <div>
+        <button onClick={startSimulation} disabled={isRunning}>
+          Start
+        </button>
+        <button onClick={stopSimulation} disabled={!isRunning}>
+          Stop
+        </button>
+        <button onClick={resetSimulation} disabled={isRunning}>
+          Reset
+        </button>
+      </div>
+      <div>Day: {day}</div>
     </div>
   );
 };
