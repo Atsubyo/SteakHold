@@ -6,6 +6,7 @@ import GlobalHeader from "@/components/GlobalHeader";
 import styles from "./page.module.css";
 import "./globals.css";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
+import { OperationInputsStoreProvider } from "@/stores/operationInputsStoreProvider";
 
 const montserratSans = Montserrat({
 	variable: "--font-montserrat-sans",
@@ -26,7 +27,11 @@ export default function RootLayout({
 		<html lang="en">
 			<body className={`${montserratSans.variable} ${styles.body}`}>
 				<GlobalHeader />
-				<AntdRegistry>{children}</AntdRegistry>
+				<AntdRegistry>
+					<OperationInputsStoreProvider>
+						{children}
+					</OperationInputsStoreProvider>
+				</AntdRegistry>
 			</body>
 		</html>
 	);
