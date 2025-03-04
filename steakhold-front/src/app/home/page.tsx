@@ -7,6 +7,7 @@ import {
 	Button,
 	Card,
 	Col,
+	Drawer,
 	Dropdown,
 	Flex,
 	Grid,
@@ -46,8 +47,12 @@ const contentStyle: React.CSSProperties = {
 	lineHeight: "120px",
 	backgroundColor: "#fff7ea",
 };
+const drawerStyle: React.CSSProperties = {
+	backgroundColor: "#fff7ea",
+};
 
 const Home: React.FC = () => {
+	const [openDrawer, setOpenDrawer] = useState(false);
 	const [optimizer, setOptimizer] = useState<OptimizerType>("Home");
 	const optimizerKeys: Record<string, OptimizerType> = {
 		"0": "Home",
@@ -191,6 +196,14 @@ const Home: React.FC = () => {
 			console.log(operationInputsStore);
 		};
 
+	const onDrawerClose = () => {
+		setOpenDrawer(false);
+	};
+
+	const onDrawerOpen = () => {
+		setOpenDrawer(true);
+	};
+
 	return (
 		<Layout className={styles.body}>
 			<Header style={headerStyle}>
@@ -245,8 +258,16 @@ const Home: React.FC = () => {
 							default:
 								return (
 									<div style={{ padding: "20px" }}>
-										<Row gutter={16}>
-											<Col span={8}>
+										<Button onClick={onDrawerOpen}>Configure Simulation</Button>
+										<Drawer
+											title="Simulation Configs"
+											placement="left"
+											width={500}
+											onClose={onDrawerClose}
+											open={openDrawer}
+											style={drawerStyle}
+										>
+											<Flex gap={20} vertical>
 												<Card title="Initial Weight" variant="borderless">
 													<Slider
 														min={operationInputsRange.initialWeightMin}
@@ -262,8 +283,6 @@ const Home: React.FC = () => {
 														onChange={handleSliderChange("initialWeight")}
 													/>
 												</Card>
-											</Col>
-											<Col span={8}>
 												<Card title="Number of Cows" variant="borderless">
 													<Slider
 														min={operationInputsRange.numCowsMin}
@@ -279,8 +298,6 @@ const Home: React.FC = () => {
 														onChange={handleSliderChange("numCows")}
 													/>
 												</Card>
-											</Col>
-											<Col span={8}>
 												<Card title="Growth Rate" variant="borderless">
 													<Slider
 														min={operationInputsRange.growthRateMin}
@@ -296,8 +313,6 @@ const Home: React.FC = () => {
 														onChange={handleSliderChange("growthRate")}
 													/>
 												</Card>
-											</Col>
-											<Col span={8}>
 												<Card title="Death Loss" variant="borderless">
 													<Slider
 														min={operationInputsRange.deathLossMin}
@@ -313,8 +328,6 @@ const Home: React.FC = () => {
 														onChange={handleSliderChange("deathLoss")}
 													/>
 												</Card>
-											</Col>
-											<Col span={8}>
 												<Card title="Max Days" variant="borderless">
 													<Slider
 														min={operationInputsRange.maxDaysMin}
@@ -330,8 +343,6 @@ const Home: React.FC = () => {
 														onChange={handleSliderChange("maxDays")}
 													/>
 												</Card>
-											</Col>
-											<Col span={8}>
 												<Card title="Sale Price" variant="borderless">
 													<Slider
 														min={operationInputsRange.salePriceMin}
@@ -347,8 +358,8 @@ const Home: React.FC = () => {
 														onChange={handleSliderChange("salePrice")}
 													/>
 												</Card>
-											</Col>
-										</Row>
+											</Flex>
+										</Drawer>
 									</div>
 								);
 						}
