@@ -137,7 +137,8 @@ const Home: React.FC = () => {
 							</Space>
 						</Button>
 					</Dropdown>
-					<Simulation operationName={beefStage}></Simulation>
+					<Simulation operationName={beefStage} LHM = {[50, 100, 2, 0.03, 200, 130]}></Simulation>
+					<Simulation operationName={beefStage} LHM={[100, 100, 2.2, 0.01, 200, 130]}></Simulation>
 				</Flex>
 			</Content>
 		</Layout>

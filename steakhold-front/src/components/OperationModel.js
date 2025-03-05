@@ -16,7 +16,7 @@ class OperationModel {
     this.expenses = 0;
     this.initial_weight = initial_weight;
     this.num_cows = num_cows;
-    this.growth_rate = growth_rate; // ADG (average daily gain);
+    this.growth_rate = growth_rate / 2; // ADG (average daily gain);
     this.death_rate = death_rate;
     this.daily_death_rate = 1 - Math.pow(1 - death_rate, 1 / max_days);
     this.max_days = max_days;
