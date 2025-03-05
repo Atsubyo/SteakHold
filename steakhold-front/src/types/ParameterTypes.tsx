@@ -1,4 +1,5 @@
 export type OptimizerType =
+	| "Home"
 	| "Feed Cost"
 	| "Feeder Cost"
 	| "Other Costs"
