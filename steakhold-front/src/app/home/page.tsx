@@ -3,22 +3,7 @@
 import React, { useState } from "react";
 import styles from "./page.module.css";
 import { DownOutlined } from "@ant-design/icons";
-import {
-	Button,
-	Card,
-	Col,
-	Drawer,
-	Dropdown,
-	Flex,
-	Grid,
-	InputNumber,
-	InputNumberProps,
-	Layout,
-	MenuProps,
-	Row,
-	Slider,
-	Space,
-} from "antd";
+import { Button, Dropdown, Flex, Layout, MenuProps, Space } from "antd";
 import { BeefStageType, OptimizerType } from "@/types/ParameterTypes";
 import {
 	FeedCost,
@@ -30,9 +15,7 @@ import {
 	Analytics,
 	CattleFutures,
 } from "@/components/optimizers";
-import { useOperationInputsStore } from "@/stores/operationInputsStoreProvider";
-import { useShallow } from "zustand/shallow";
-import Simulation from "@/components/Simulation";
+import Simulation from "@/components/simulator/Simulation.jsx";
 
 const { Header, Content } = Layout;
 const headerStyle: React.CSSProperties = {
@@ -53,7 +36,6 @@ const drawerStyle: React.CSSProperties = {
 };
 
 const Home: React.FC = () => {
-	const [openDrawer, setOpenDrawer] = useState(false);
 	const [optimizer, setOptimizer] = useState<OptimizerType>("Home");
 	const optimizerKeys: Record<string, OptimizerType> = {
 		"0": "Home",
@@ -137,74 +119,6 @@ const Home: React.FC = () => {
 		},
 	];
 
-	const operationInputsStore = useOperationInputsStore(
-		useShallow((store) => ({
-			initialWeight: store.initialWeight,
-			setInitialWeight: store.setInitialWeight,
-			numCows: store.numCows,
-			setNumCows: store.setNumCows,
-			growthRate: store.growthRate,
-			setGrowthRate: store.setGrowthRate,
-			deathLoss: store.deathLoss,
-			setDeathLoss: store.setDeathLoss,
-			maxDays: store.maxDays,
-			setMaxDays: store.setMaxDays,
-			salePrice: store.salePrice,
-			setSalePrice: store.setSalePrice,
-		}))
-	);
-
-	const operationInputsRange = {
-		initialWeightMin: 0,
-		initialWeightMax: 100,
-		numCowsMin: 0,
-		numCowsMax: 100,
-		growthRateMin: 0,
-		growthRateMax: 100,
-		deathLossMin: 0,
-		deathLossMax: 100,
-		maxDaysMin: 0,
-		maxDaysMax: 100,
-		salePriceMin: 0,
-		salePriceMax: 100,
-	};
-
-	const handleSliderChange =
-		(slider: string): InputNumberProps["onChange"] =>
-		(value) => {
-			switch (slider) {
-				case "initialWeight":
-					operationInputsStore.setInitialWeight(value as number);
-					break;
-				case "numCows":
-					operationInputsStore.setNumCows(value as number);
-					break;
-				case "growthRate":
-					operationInputsStore.setGrowthRate(value as number);
-					break;
-				case "deathLoss":
-					operationInputsStore.setDeathLoss(value as number);
-					break;
-				case "maxDays":
-					operationInputsStore.setMaxDays(value as number);
-					break;
-				case "salePrice":
-					operationInputsStore.setSalePrice(value as number);
-					break;
-				default:
-					break;
-			}
-			console.log(operationInputsStore);
-		};
-
-	const onDrawerClose = () => {
-		setOpenDrawer(false);
-	};
-
-	const onDrawerOpen = () => {
-		setOpenDrawer(true);
-	};
-
 	return (
 		<Layout className={styles.body}>
 			<Header style={headerStyle}>
@@ -259,110 +173,26 @@ const Home: React.FC = () => {
 							default:
 								return (
 									<div style={{ padding: "20px" }}>
-										<Button onClick={onDrawerOpen}>Configure Simulation</Button>
-										<Simulation operationName={beefStage} LHM = {[50, 100, 2, 0.03, 200, 130]}></Simulation>
-										<Simulation operationName={beefStage} LHM={[100, 100, 2.2, 0.01, 200, 130]}></Simulation>
-										<Drawer
-											title="Simulation Configs"
-											placement="left"
-											width={500}
-											onClose={onDrawerClose}
-											open={openDrawer}
-											style={drawerStyle}
-										>
-											<Flex gap={20} vertical>
-												<Card title="Initial Weight" variant="borderless">
-													<Slider
-														min={operationInputsRange.initialWeightMin}
-														max={operationInputsRange.initialWeightMax}
-														value={operationInputsStore.initialWeight}
-														onChange={handleSliderChange("initialWeight")}
-													/>
-													<InputNumber
-														min={operationInputsRange.initialWeightMin}
-														max={operationInputsRange.initialWeightMax}
-														style={{ margin: "0 16px" }}
-														value={operationInputsStore.initialWeight}
-														onChange={handleSliderChange("initialWeight")}
-													/>
-												</Card>
-												<Card title="Number of Cows" variant="borderless">
-													<Slider
-														min={operationInputsRange.numCowsMin}
-														max={operationInputsRange.numCowsMax}
-														value={operationInputsStore.numCows}
-														onChange={handleSliderChange("numCows")}
-													/>
-													<InputNumber
-														min={operationInputsRange.numCowsMin}
-														max={operationInputsRange.numCowsMax}
-														style={{ margin: "0 16px" }}
-														value={operationInputsStore.numCows}
-														onChange={handleSliderChange("numCows")}
-													/>
-												</Card>
-												<Card title="Growth Rate" variant="borderless">
-													<Slider
-														min={operationInputsRange.growthRateMin}
-														max={operationInputsRange.growthRateMax}
-														value={operationInputsStore.growthRate}
-														onChange={handleSliderChange("growthRate")}
-													/>
-													<InputNumber
-														min={operationInputsRange.growthRateMin}
-														max={operationInputsRange.growthRateMax}
-														style={{ margin: "0 16px" }}
-														value={operationInputsStore.growthRate}
-														onChange={handleSliderChange("growthRate")}
-													/>
-												</Card>
-												<Card title="Death Loss" variant="borderless">
-													<Slider
-														min={operationInputsRange.deathLossMin}
-														max={operationInputsRange.deathLossMax}
-														value={operationInputsStore.deathLoss}
-														onChange={handleSliderChange("deathLoss")}
-													/>
-													<InputNumber
-														min={operationInputsRange.deathLossMin}
-														max={operationInputsRange.deathLossMax}
-														style={{ margin: "0 16px" }}
-														value={operationInputsStore.deathLoss}
-														onChange={handleSliderChange("deathLoss")}
-													/>
-												</Card>
-												<Card title="Max Days" variant="borderless">
-													<Slider
-														min={operationInputsRange.maxDaysMin}
-														max={operationInputsRange.maxDaysMax}
-														value={operationInputsStore.maxDays}
-														onChange={handleSliderChange("maxDays")}
-													/>
-													<InputNumber
-														min={operationInputsRange.maxDaysMin}
-														max={operationInputsRange.maxDaysMax}
-														style={{ margin: "0 16px" }}
-														value={operationInputsStore.maxDays}
-														onChange={handleSliderChange("maxDays")}
-													/>
-												</Card>
-												<Card title="Sale Price" variant="borderless">
-													<Slider
-														min={operationInputsRange.salePriceMin}
-														max={operationInputsRange.salePriceMax}
-														value={operationInputsStore.salePrice}
-														onChange={handleSliderChange("salePrice")}
-													/>
-													<InputNumber
-														min={operationInputsRange.salePriceMin}
-														max={operationInputsRange.salePriceMax}
-														style={{ margin: "0 16px" }}
-														value={operationInputsStore.salePrice}
-														onChange={handleSliderChange("salePrice")}
-													/>
-												</Card>
-											</Flex>
-										</Drawer>
+										<Flex>
+											<Simulation
+												operationName={beefStage}
+												initialWeight={50}
+												numCows={100}
+												growthRate={2}
+												deathLoss={0.03}
+												maxDays={200}
+												salePrice={130}
+											/>
+											<Simulation
+												operationName={beefStage}
+												initialWeight={100}
+												numCows={100}
+												growthRate={2.2}
+												deathLoss={0.01}
+												maxDays={200}
+												salePrice={130}
+											/>
+										</Flex>
 									</div>
 								);
 						}
