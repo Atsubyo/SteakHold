@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import OperationModel from "./OperationModel";
 import { PiCowFill } from "react-icons/pi";
+import { GiCow } from "react-icons/gi";
 
 const LHM = [50, 100, 2, 0.001, 100, 130];
 
 const Simulation = () => {
   const [operationModel] = useState(new OperationModel(...LHM));
-  const [cows, setCows] = useState([]);
+  const [cows, setCows] = useState(() => []);
   const [day, setDay] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
   const [intervalId, setIntervalId] = useState(null);
@@ -78,11 +79,12 @@ const Simulation = () => {
               justifyContent: "center",
               alignItems: "center",
 
-              backgroundColor: cow.isAlive ? "green" : "red", // Green for healthy, red for dead
+              // backgroundColor: cow.isAlive ? "green" : "red", // Green for healthy, red for dead
               borderRadius: "50%",
             }}
           >
-            <PiCowFill size={(cow.weight+30)/10} color="white" weight="bold" />
+            {/* <PiCowFill size={(cow.weight+30)/10} color="white" weight="bold" /> */}
+            <GiCow size={(cow.weight+30)/10} color={cow.isAlive ? "green" : "red"} weight="bold" />
             {/* Optionally: You can add more visual details here */}
           </div>
         ))}
