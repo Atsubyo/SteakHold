@@ -32,6 +32,7 @@ import {
 } from "@/components/optimizers";
 import { useOperationInputsStore } from "@/stores/operationInputsStoreProvider";
 import { useShallow } from "zustand/shallow";
+import Simulation from "@/components/Simulation";
 
 const { Header, Content } = Layout;
 const headerStyle: React.CSSProperties = {
@@ -259,6 +260,8 @@ const Home: React.FC = () => {
 								return (
 									<div style={{ padding: "20px" }}>
 										<Button onClick={onDrawerOpen}>Configure Simulation</Button>
+										<Simulation operationName={beefStage} LHM = {[50, 100, 2, 0.03, 200, 130]}></Simulation>
+										<Simulation operationName={beefStage} LHM={[100, 100, 2.2, 0.01, 200, 130]}></Simulation>
 										<Drawer
 											title="Simulation Configs"
 											placement="left"
