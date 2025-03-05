@@ -173,24 +173,26 @@ const Home: React.FC = () => {
 							default:
 								return (
 									<div style={{ padding: "20px" }}>
-										<Simulation
-											operationName={beefStage}
-											initialWeight={50}
-											numCows={100}
-											growthRate={2}
-											deathLoss={0.03}
-											maxDays={200}
-											salePrice={130}
-										></Simulation>
-										<Simulation
-											operationName={beefStage}
-											initialWeight={100}
-											numCows={100}
-											growthRate={2.2}
-											deathLoss={0.01}
-											maxDays={200}
-											salePrice={130}
-										></Simulation>
+										<Flex>
+											<Simulation
+												operationName={beefStage}
+												initialWeight={50}
+												numCows={100}
+												growthRate={2}
+												deathLoss={0.03}
+												maxDays={200}
+												salePrice={130}
+											/>
+											<Simulation
+												operationName={beefStage}
+												initialWeight={100}
+												numCows={100}
+												growthRate={2.2}
+												deathLoss={0.01}
+												maxDays={200}
+												salePrice={130}
+											/>
+										</Flex>
 									</div>
 								);
 						}
