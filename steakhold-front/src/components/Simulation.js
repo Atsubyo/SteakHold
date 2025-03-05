@@ -2,40 +2,78 @@ import { useEffect, useState } from "react";
 import OperationModel from "./OperationModel";
 import { PiCowFill } from "react-icons/pi";
 import { GiCow } from "react-icons/gi";
+import { Button } from "antd";
+import { Line } from "react-chartjs-2";
+import { Chart, registerables, CategoryScale } from "chart.js";
+Chart.register(...registerables, CategoryScale);
 
-const LHM = [50, 100, 2, 0.001, 100, 130];
-
-const Simulation = () => {
-  const [operationModel] = useState(new OperationModel(...LHM));
-  const [cows, setCows] = useState(() => []);
+const Simulation = (props) => {
+  const { LHM } = props;
+  const operationName = props.operationName || "Low Health Management Cow Calf";
+  const [operationModel, setOperationModel] = useState(
+    new OperationModel(...LHM)
+  );
+  const [cows, setCows] = useState([]);
   const [day, setDay] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
   const [intervalId, setIntervalId] = useState(null);
+  const [chartData, setChartData] = useState({
+    labels: [],
+    datasets: [
+      {
+        label: "Cows Alive",
+        data: [],
+        borderColor: "blue",
+        fill: false,
+      },
+    ],
+  });
 
   const startSimulation = () => {
     if (isRunning) return;
-    for (let i = 0; i < 100; i++) {
-      operationModel.addCow();
+
+    if (day === 0) {
+      for (let i = 0; i < 200; i++) {
+        operationModel.addCow();
+      }
+    }
+
+    if (intervalId) {
+      clearInterval(intervalId);
     }
 
     const interval = setInterval(() => {
-      operationModel.step();
       setDay((prevDay) => {
         const newDay = prevDay + 1;
         if (newDay >= operationModel.max_days) {
           clearInterval(interval);
           setIsRunning(false);
         }
+        setOperationModel((prevModel) => {
+          const newModel = new OperationModel(...LHM);
+          Object.assign(newModel, prevModel);
+          newModel.step();
+          console.log(newDay);
+          setCows([...newModel.cows]);
+          setChartData((prevData) => ({
+            labels: [...prevData.labels, newDay],
+            datasets: [
+              {
+                ...prevData.datasets[0],
+                data: [...prevData.datasets[0].data, newModel.cows.length],
+              },
+            ],
+          }));
+          return newModel;
+        });
         return newDay;
       });
-      setCows([...operationModel.cows]);
     }, 100);
 
     setIntervalId(interval);
     setIsRunning(true);
   };
 
-  // Stop the simulation
   const stopSimulation = () => {
     if (intervalId) {
       clearInterval(intervalId);
@@ -43,20 +81,30 @@ const Simulation = () => {
     }
   };
 
-  // Reset the simulation
   const resetSimulation = () => {
     if (intervalId) {
       clearInterval(intervalId);
     }
-    operationModel.reset(); // Assuming OperationModel has a reset method to reset the model
-    setDay(0);
+    setOperationModel(new OperationModel(...LHM));
     setCows([]);
+    setDay(0);
     setIsRunning(false);
+    setChartData({
+      labels: [],
+      datasets: [
+        {
+          label: "Cows Alive",
+          data: [],
+          borderColor: "blue",
+          fill: false,
+        },
+      ],
+    });
   };
 
   return (
     <div>
-      <h2>Farm Visualizer</h2>
+      <h2>{operationName} Operation Visualizer</h2>
       <div
         style={{
           position: "relative",
@@ -90,18 +138,38 @@ const Simulation = () => {
         ))}
       </div>
 
-      <div>
-        <button onClick={startSimulation} disabled={isRunning}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          columnGap: "16px",
+          padding: "16px",
+        }}
+      >
+        <Button onClick={startSimulation} disabled={isRunning}>
           Start
-        </button>
-        <button onClick={stopSimulation} disabled={!isRunning}>
-          Stop
-        </button>
-        <button onClick={resetSimulation} disabled={isRunning}>
+        </Button>
+        <Button onClick={stopSimulation} disabled={!isRunning}>
+          Pause
+        </Button>
+        <Button onClick={resetSimulation} disabled={isRunning}>
           Reset
-        </button>
+        </Button>
       </div>
-      <div>Day: {day}</div>
+      <p>Day: {day}</p>
+      <div style={{ width: "600px", margin: "auto", paddingTop: "20px" }}>
+        <h3>Cows Alive Over Time</h3>
+        <Line
+          data={chartData}
+          options={{
+            responsive: true,
+            scales: {
+              x: { title: { display: true, text: "Days" } },
+              y: { title: { display: true, text: "Cows Alive" } },
+            },
+          }}
+        />
+      </div>
     </div>
   );
 };
