@@ -7,6 +7,7 @@ import styles from "./page.module.css";
 import "./globals.css";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import { OperationInputsStoreProvider } from "@/stores/operationInputsStoreProvider";
+import { ConfigProvider } from "antd";
 
 const montserratSans = Montserrat({
 	variable: "--font-montserrat-sans",
@@ -28,9 +29,19 @@ export default function RootLayout({
 			<body className={`${montserratSans.variable} ${styles.body}`}>
 				<GlobalHeader />
 				<AntdRegistry>
-					<OperationInputsStoreProvider>
-						{children}
-					</OperationInputsStoreProvider>
+					<ConfigProvider
+						theme={{
+							components: {
+								Divider: {
+									verticalMarginInline: 25,
+								},
+							},
+						}}
+					>
+						<OperationInputsStoreProvider>
+							{children}
+						</OperationInputsStoreProvider>
+					</ConfigProvider>
 				</AntdRegistry>
 			</body>
 		</html>

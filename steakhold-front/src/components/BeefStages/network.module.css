@@ -1,0 +1,21 @@
+.container {
+	background-color: var(--background);
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	overflow-x: auto;
+}
+
+.setupHeader {
+}
+
+.scrollContainer {
+	overflow-x: auto;
+	white-space: nowrap;
+	padding-bottom: 10px;
+	width: 100%;
+}
+
+.networkFlex {
+	min-width: max-content;
+}
