@@ -47,6 +47,7 @@ const Simulation = (props) => {
   );
   const [cows, setCows] = useState([]);
   const [day, setDay] = useState(0);
+  const [isFinished, setIsFinished] = useState(false);
   const [isRunning, setIsRunning] = useState(false);
   const [intervalId, setIntervalId] = useState(null);
   const [chartData, setChartData] = useState([
@@ -75,89 +76,95 @@ const Simulation = (props) => {
   ]);
   const [openDrawer, setOpenDrawer] = useState(false);
 
+  const sum = (arr) => arr.reduce((acc, val) => acc + val, 0);
   const startSimulation = () => {
     if (isRunning) return;
 
     if (day === 0) {
-      for (let i = 0; i < 10; i++) {
+      for (let i = 0; i < configInputs.numCows; i++) {
         operationModel.addCow();
       }
     }
-
-    if (intervalId) {
-      clearInterval(intervalId);
-    }
-
     const interval = setInterval(() => {
-      setDay((prevDay) => {
-        const newDay = prevDay + 1;
-        if (newDay >= operationModel.max_days) {
-          clearInterval(interval);
-          setIsRunning(false);
-        }
-        setOperationModel((prevModel) => {
-          const newModel = new OperationModel(
-            configInputs.initialWeight,
-            configInputs.numCows,
-            configInputs.growthRate,
-            configInputs.deathLoss,
-            configInputs.maxDays,
-            configInputs.salePrice
-          );
-          Object.assign(newModel, prevModel);
-          newModel.step();
-          console.log(newDay);
-          setCows([...newModel.cows]);
-          setChartData((prevData) => {
-            return [
-              {
-                labels: [...prevData[0].labels, newDay],
-                datasets: [
-                  {
-                    label: "Cows Alive",
-                    data: [
-                      ...prevData[0].datasets[0].data,
-                      newModel.cows.length,
-                    ],
-                    borderColor: "blue",
-                    fill: false,
-                  },
-                ],
-              },
-              {
-                labels: [...prevData[1].labels, newDay],
-                datasets: [
-                  {
-                    label: "Profit",
-                    data: [
-                      ...prevData[1].datasets[0].data,
-                      100 * newModel.num_cows,
-                    ],
-                    borderColor: "green",
-                    fill: false,
-                  },
-                ],
-              },
-            ];
-          });
-          return newModel;
-        });
-        return newDay;
-      });
+      stepSimulation(interval);
     }, 100);
 
     setIntervalId(interval);
     setIsRunning(true);
   };
+  const stepSimulation = (currentIntervalId = null) => {
+    if (day === 0) {
+      for (let i = 0; i < configInputs.numCows; i++) {
+        operationModel.addCow();
+      }
+    }
+
+    setDay((prevDay) => {
+      const newDay = prevDay + 1;
+      if (newDay >= operationModel.max_days) {
+        if (currentIntervalId) clearInterval(currentIntervalId);
+        stopSimulation();
+        setIsFinished(true);
+      }
+
+      setOperationModel((prevModel) => {
+        const newModel = new OperationModel(
+          configInputs.initialWeight,
+          configInputs.numCows,
+          configInputs.growthRate,
+          configInputs.deathLoss,
+          configInputs.maxDays,
+          configInputs.salePrice
+        );
+        Object.assign(newModel, prevModel);
+        newModel.step();
+        setCows([...newModel.cows]);
+        setChartData((prevData) => {
+          return [
+            {
+              labels: [...prevData[0].labels, newDay],
+              datasets: [
+                {
+                  label: "Cows Alive",
+                  data: [...prevData[0].datasets[0].data, newModel.cows.length],
+                  borderColor: "blue",
+                  fill: false,
+                },
+              ],
+            },
+            {
+              labels: [...prevData[1].labels, newDay],
+              datasets: [
+                {
+                  label: "Profit",
+                  data: [
+                    ...prevData[1].datasets[0].data,
+                    (configInputs.salePrice *
+                      sum(newModel.cows.map((cow) => cow.weight))) /
+                      100,
+                  ],
+                  borderColor: "green",
+                  fill: false,
+                },
+              ],
+            },
+          ];
+        });
+        return newModel;
+      });
+      return newDay;
+    });
+  };
   const stopSimulation = () => {
     if (intervalId) {
       clearInterval(intervalId);
-      setIsRunning(false);
     }
+    setIsRunning(false);
   };
   const resetSimulation = () => {
     if (intervalId) {
       clearInterval(intervalId);
+      setIsFinished(false);
     }
     setOperationModel(
       new OperationModel(
@@ -251,7 +258,6 @@ const Simulation = (props) => {
               left: `${cow.location.x}%`,
               width: `${cow.weight / 25}px`,
               height: `${cow.weight / 25}px`,
-              backgroundColor: cow.health > 0 ? "green" : "red", // Green for healthy, red for dead
               borderRadius: "50%",
             }}
           ></div>
@@ -266,8 +272,11 @@ const Simulation = (props) => {
           padding: "16px",
         }}
       >
-        <Button onClick={startSimulation} disabled={isRunning}>
+        <Button onClick={startSimulation} disabled={isRunning || isFinished}>
           Start
+        </Button>
+        <Button onClick={stepSimulation} disabled={isRunning || isFinished}>
+          Step
         </Button>
         <Button onClick={stopSimulation} disabled={!isRunning}>
           Pause
