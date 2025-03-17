@@ -3,8 +3,11 @@ import OperationModel from "./OperationModel";
 import { Button, Drawer, Card, Slider, InputNumber, Flex } from "antd";
 import { Line } from "react-chartjs-2";
 import { Chart, registerables, CategoryScale } from "chart.js";
+import SimulationResultsTable from "./SimulationResultsTable";
 Chart.register(...registerables, CategoryScale);
 import styles from "./Simulation.module.css";
+import { Typography } from "antd";
+const { Title, Paragraph } = Typography;
 
 const useDebouncedCallback = (callback, delay) => {
   const timeoutRef = useRef(null);
@@ -23,6 +26,37 @@ const useDebouncedCallback = (callback, delay) => {
 const drawerStyle = {
   backgroundColor: "#fff7ea",
 };
+
+const initialChartData = [
+  {
+    labels: [],
+    datasets: [
+      {
+        label: "Cows Alive",
+        data: [],
+        borderColor: "blue",
+        fill: false,
+      },
+    ],
+  },
+  {
+    labels: [],
+    datasets: [
+      {
+        label: "Profit",
+        data: [],
+        borderColor: "green",
+        fill: false,
+      },
+      {
+        label: "Expenses",
+        data: [],
+        borderColor: "yellow",
+        fill: false,
+      },
+    ],
+  },
+];
 
 const Simulation = (props) => {
   const LHM = [
@@ -50,30 +84,7 @@ const Simulation = (props) => {
   const [isFinished, setIsFinished] = useState(false);
   const [isRunning, setIsRunning] = useState(false);
   const [intervalId, setIntervalId] = useState(null);
-  const [chartData, setChartData] = useState([
-    {
-      labels: [],
-      datasets: [
-        {
-          label: "Cows Alive",
-          data: [],
-          borderColor: "blue",
-          fill: false,
-        },
-      ],
-    },
-    {
-      labels: [],
-      datasets: [
-        {
-          label: "Profit",
-          data: [],
-          borderColor: "green",
-          fill: false,
-        },
-      ],
-    },
-  ]);
+  const [chartData, setChartData] = useState(initialChartData);
   const [openDrawer, setOpenDrawer] = useState(false);
 
   const sum = (arr) => arr.reduce((acc, val) => acc + val, 0);
@@ -146,6 +157,17 @@ const Simulation = (props) => {
                   borderColor: "green",
                   fill: false,
                 },
+                {
+                  label: "Expenses",
+                  data: [
+                    ...prevData[1].datasets[1].data,
+                    (prevData[1].datasets[1].data.length > 0
+                      ? prevData[1].datasets[1].data.at(-1)
+                      : 0) + newModel.cows.length,
+                  ],
+                  borderColor: "yellow",
+                  fill: false,
+                },
               ],
             },
           ];
@@ -179,30 +201,7 @@ const Simulation = (props) => {
     setCows([]);
     setDay(0);
     setIsRunning(false);
-    setChartData([
-      {
-        labels: [],
-        datasets: [
-          {
-            label: "Cows Alive",
-            data: [],
-            borderColor: "blue",
-            fill: false,
-          },
-        ],
-      },
-      {
-        labels: [],
-        datasets: [
-          {
-            label: "Profit",
-            data: [],
-            borderColor: "green",
-            fill: false,
-          },
-        ],
-      },
-    ]);
+    setChartData(initialChartData);
   };
 
   const debouncedUpdate = useDebouncedCallback((slider, value) => {
@@ -239,7 +238,12 @@ const Simulation = (props) => {
 
   return (
     <div className={styles.contentCol}>
-      <h2>{operationName} Operation Visualizer</h2>
+      <div>
+        <Title level={3} style={{ marginBottom: 4 }}>
+          {operationName} Operation Visualizer
+        </Title>
+        <Paragraph>Day - {day}</Paragraph>
+      </div>
       <div
         style={{
           position: "relative",
@@ -259,11 +263,11 @@ const Simulation = (props) => {
               width: `${cow.weight / 25}px`,
               height: `${cow.weight / 25}px`,
               borderRadius: "50%",
+              backgroundColor: "brown",
             }}
           ></div>
         ))}
       </div>
-
       <div
         style={{
           display: "flex",
@@ -286,7 +290,14 @@ const Simulation = (props) => {
         </Button>
         <Button onClick={onDrawerOpen}>Configure Simulation</Button>
       </div>
-      <p>Day: {day}</p>
+      <SimulationResultsTable
+        isFinished={isFinished}
+        isRunning={isRunning}
+        cows={cows}
+        chartData={chartData}
+        operationName={operationName}
+        configInputs={configInputs}
+      />
       <div style={{ width: "600px" }}>
         <h3>Cows Alive Over Time</h3>
         <Line
@@ -308,7 +319,10 @@ const Simulation = (props) => {
             responsive: true,
             scales: {
               x: { title: { display: true, text: "Days" } },
-              y: { title: { display: true, text: "Profit in USD" } },
+              y: {
+                title: { display: true, text: "USD" },
+                position: "left",
+              },
             },
           }}
         />

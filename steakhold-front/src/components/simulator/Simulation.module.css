@@ -1,7 +1,8 @@
 .contentCol {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
     row-gap: 0;
+    margin: 0rem 1rem;
 }
