@@ -90,7 +90,7 @@ const Home: React.FC = () => {
 					{(() => {
 						switch (beefStage) {
 							case "Network":
-								return <Network beefStage={beefStage} />;
+								return <Network />;
 							case "Cow Calf":
 								return <CowCalf />;
 							case "Stocker":

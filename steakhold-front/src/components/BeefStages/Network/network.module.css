@@ -7,6 +7,7 @@
 }
 
 .setupHeader {
+	width: 100dvw;
 }
 
 .scrollContainer {
@@ -18,4 +19,16 @@
 
 .networkFlex {
 	min-width: max-content;
+}
+
+.networkContainer {
+}
+
+.headerSpacer {
+	max-width: 150px;
+}
+
+.networkSelectMenu {
+	margin-inline: 0.5rem;
+	background: var(--background);
 }

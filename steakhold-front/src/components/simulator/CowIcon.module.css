@@ -1,0 +1,7 @@
+.cowSvg {
+	background: url("../../../public/Cow.svg") no-repeat;
+	background-size: contain;
+	background-position: center;
+	background-color: transparent;
+	position: absolute;
+}

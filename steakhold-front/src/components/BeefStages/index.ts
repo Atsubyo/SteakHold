@@ -1,4 +1,4 @@
-import Network from "./Network";
+import Network from "./Network/Network";
 import CowCalf from "./CowCalf";
 import Stocker from "./Stocker";
 import Feedlot from "./Feedlot";

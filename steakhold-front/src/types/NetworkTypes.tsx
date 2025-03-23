@@ -9,3 +9,12 @@ export interface OpenNotificationProps {
 	title: string;
 	message: string;
 }
+
+export type CowCalfType = "Select Cow Calf" | "LHM Cow Calf" | "HHM Cow Calf";
+export type StockerType = "Select Stocker" | "LHM Stocker" | "HHM Stocker";
+export type FeedlotType =
+	| "Select Feedlot"
+	| "LHM Indirect Feedlot"
+	| "HHM Indirect Feedlot"
+	| "LHM Direct Feedlot"
+	| "HHM Direct Feedlot";
