@@ -86,16 +86,11 @@ const Simulation = (props) => {
   const [intervalId, setIntervalId] = useState(null);
   const [chartData, setChartData] = useState(initialChartData);
   const [openDrawer, setOpenDrawer] = useState(false);
+  const initialized = useRef(false);
 
   const sum = (arr) => arr.reduce((acc, val) => acc + val, 0);
   const startSimulation = () => {
     if (isRunning) return;
-
-    if (day === 0) {
-      for (let i = 0; i < configInputs.numCows; i++) {
-        operationModel.addCow();
-      }
-    }
     const interval = setInterval(() => {
       stepSimulation(interval);
     }, 100);
@@ -104,10 +99,13 @@ const Simulation = (props) => {
     setIsRunning(true);
   };
   const stepSimulation = (currentIntervalId = null) => {
-    if (day === 0) {
+    if (day === 0 && !initialized.current) {
+      console.log(`On day ${day}`);
       for (let i = 0; i < configInputs.numCows; i++) {
+        console.log(`Adding cow: #${i}`);
         operationModel.addCow();
       }
+      initialized.current = true;
     }
 
     setDay((prevDay) => {
