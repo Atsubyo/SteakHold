@@ -79,7 +79,6 @@ const Simulation = (props) => {
   const [operationModel, setOperationModel] = useState(
     new OperationModel(...LHM)
   );
-  const [cows, setCows] = useState([]);
   const [day, setDay] = useState(0);
   const [isFinished, setIsFinished] = useState(false);
   const [isRunning, setIsRunning] = useState(false);
@@ -127,7 +126,6 @@ const Simulation = (props) => {
         );
         Object.assign(newModel, prevModel);
         newModel.step();
-        setCows([...newModel.cows]);
         setChartData((prevData) => {
           return [
             {
@@ -196,7 +194,6 @@ const Simulation = (props) => {
         configInputs.salePrice
       )
     );
-    setCows([]);
     setDay(0);
     setIsRunning(false);
     setChartData(initialChartData);
@@ -251,7 +248,7 @@ const Simulation = (props) => {
           borderRadius: "10px",
         }}
       >
-        {cows.map((cow) => (
+        {operationModel.cows.map((cow) => (
           <div
             key={cow.id}
             style={{
@@ -291,7 +288,7 @@ const Simulation = (props) => {
       <SimulationResultsTable
         isFinished={isFinished}
         isRunning={isRunning}
-        cows={cows}
+        cows={operationModel.cows}
         chartData={chartData}
         operationName={operationName}
         configInputs={configInputs}
