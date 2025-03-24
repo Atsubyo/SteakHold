@@ -10,10 +10,14 @@
 	width: 100dvw;
 }
 
+.simulationController {
+	margin-inline: 1rem;
+}
+
 .scrollContainer {
 	overflow-x: auto;
 	white-space: nowrap;
-	padding-bottom: 10px;
+	padding-bottom: 1rem;
 	width: 100%;
 }
 
@@ -22,6 +26,7 @@
 }
 
 .networkContainer {
+	min-height: 600px;
 }
 
 .headerSpacer {

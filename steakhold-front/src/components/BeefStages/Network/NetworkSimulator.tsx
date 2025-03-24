@@ -2,13 +2,33 @@ import React, { useState } from "react";
 import styles from "./network.module.css";
 import { Button, Dropdown, Flex, MenuProps, Space } from "antd";
 import { ArrowRightOutlined, DownOutlined } from "@ant-design/icons";
-import { CowCalfType, FeedlotType, StockerType } from "@/types/NetworkTypes";
+import {
+	CowCalfType,
+	FeedlotType,
+	OperationNameType,
+	OperationVisualizerProps,
+	RunningStateType,
+	StockerType,
+} from "@/types/NetworkTypes";
+import OperationModel from "@/components/simulator/OperationModel";
+import { BeefStageType } from "@/types/ParameterTypes";
 
-// interface NetworkSimulatorProps {}
+interface NetworkSimulatorProps {
+	runningState: RunningStateType;
+}
 
-const NetworkSimulator: React.FC = ({}) => {
+const NetworkSimulator: React.FC<NetworkSimulatorProps> = ({
+	runningState,
+}) => {
 	const [cowCalfType, setCowCalfType] =
 		useState<CowCalfType>("Select Cow Calf");
+	const [stockerType, setStockerType] = useState<StockerType>("Select Stocker");
+	const [feedlotType, setFeedlotType] = useState<FeedlotType>("Select Feedlot");
+	const [operationModel, setOperationModel] = useState<OperationModel>();
+	const [, setNextOperationModel] = useState<OperationModel | null>();
+	const [operationStageName, setOperationStageName] =
+		useState<BeefStageType>("Cow Calf");
+
 	const cowCalfTypeKeys: Record<string, CowCalfType> = {
 		"0": "LHM Cow Calf",
 		"1": "HHM Cow Calf",
@@ -26,7 +46,7 @@ const NetworkSimulator: React.FC = ({}) => {
 			key: "1",
 		},
 	];
-	const [stockerType, setStockerType] = useState<StockerType>("Select Stocker");
+
 	const stockerTypeKeys: Record<string, StockerType> = {
 		"0": "LHM Stocker",
 		"1": "HHM Stocker",
@@ -36,19 +56,19 @@ const NetworkSimulator: React.FC = ({}) => {
 	};
 	const stockerTypeItem: MenuProps["items"] = [
 		{
-			label: "LHM Cow Calf",
+			label: "LHM Stocker",
 			key: "0",
 		},
 		{
-			label: "HHM Cow Calf",
+			label: "HHM Stocker",
 			key: "1",
 		},
 	];
-	const [feedlotType, setFeedlotType] = useState<FeedlotType>("Select Feedlot");
+
 	const feedlotTypeKeys: Record<string, FeedlotType> = {
 		"0": "LHM Indirect Feedlot",
 		"1": "HHM Indirect Feedlot",
-		"2": "HHM Direct Feedlot",
+		"2": "LHM Direct Feedlot",
 		"3": "HHM Direct Feedlot",
 	};
 	const FeedlotTypeOnClick: MenuProps["onClick"] = ({ key }) => {
@@ -56,17 +76,53 @@ const NetworkSimulator: React.FC = ({}) => {
 	};
 	const feedlotTypeItem: MenuProps["items"] = [
 		{
-			label: "LHM Cow Calf",
+			label: "LHM Indirect Feedlot",
 			key: "0",
 		},
 		{
-			label: "HHM Cow Calf",
+			label: "HHM Indirect Feedlot",
 			key: "1",
+		},
+		{
+			label: "LHM Direct Feedlot",
+			key: "2",
+		},
+		{
+			label: "HHM Direct Feedlot",
+			key: "3",
 		},
 	];
 
+	const getOperationName = (
+		operationStageName: BeefStageType
+	): OperationNameType => {
+		switch (operationStageName) {
+			case "Stocker":
+				return stockerType;
+			case "Feedlot":
+				return feedlotType;
+			case "Cow Calf":
+			case "Retail":
+			case "Network":
+			default:
+				return "LHM Cow Calf";
+		}
+	};
+
+	const getOperationVisualizerProps: OperationVisualizerProps = () => {
+		return {
+			operationModel: operationModel,
+			setOperationModel: setOperationModel,
+			setNextOperationalModel: setNextOperationModel,
+			operationStageName: operationStageName,
+			operationName: getOperationName(operationStageName),
+			isRunning: runningState === "running",
+			isFinished: runningState === "finished",
+		};
+	};
+
 	return (
-		<Flex vertical>
+		<Flex className={styles.networkContainer} vertical>
 			<Flex align="center" justify="center">
 				<Dropdown
 					menu={{ items: cowCalfTypeItem, onClick: CowCalfTypeOnClick }}
