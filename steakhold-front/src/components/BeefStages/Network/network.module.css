@@ -12,6 +12,7 @@
 
 .simulationController {
 	margin-inline: 1rem;
+	min-width: 175px;
 }
 
 .scrollContainer {
@@ -36,4 +37,5 @@
 .networkSelectMenu {
 	margin-inline: 0.5rem;
 	background: var(--background);
+	min-width: 175px;
 }
