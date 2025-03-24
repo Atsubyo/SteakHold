@@ -197,6 +197,7 @@ const Simulation = (props) => {
     setDay(0);
     setIsRunning(false);
     setChartData(initialChartData);
+    initialized.current = false;
   };
 
   const debouncedUpdate = useDebouncedCallback((slider, value) => {

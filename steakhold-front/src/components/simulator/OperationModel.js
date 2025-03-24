@@ -22,12 +22,6 @@ class OperationModel {
     this.max_days = max_days;
     this.target_weight = max_days * growth_rate + initial_weight;
     this.sale_price = sale_price;
-    this.target_weight = growth_rate * max_days + initial_weight;
-
-    this.cows = new Array(num_cows);
-    for (let i = 0; i < num_cows; i++) {
-      this.cows[i] = new CowAgent(i + 1, this.initial_weight);
-    }
   }
 
   addCow(cow = null) {
@@ -55,6 +49,7 @@ class OperationModel {
       cow.move();
 
       if (cow.weight >= this.target_weight) {
+        console.log("Cow #", cow.id, " reached weight: ", this.target_weight);
         transferCows.push(cow);
       } else {
         remainingCows.push(cow);
@@ -62,7 +57,6 @@ class OperationModel {
     }
 
     this.cows = remainingCows;
-    console.log("Transfer cows: ", transferCows);
     return transferCows;
   }
 
