@@ -6,7 +6,8 @@ import styles from "./Simulation.module.css";
 import CowIcon from "./CowIcon.tsx";
 
 const COW_CALF = "cow_calf";
-const SLAUGHTER = "slaughter";
+const STOCKER = "stocker";
+const FEEDLOT = "feedlot";
 
 // TODO: CHANGE TEMP EXPECTED PROPS
 const OperationVisualizer = (props) => {
@@ -65,7 +66,7 @@ const OperationVisualizer = (props) => {
       );
       Object.assign(newModel, prevModel);
       let transferredCows = newModel.step();
-      if (transferredCows.length > 0 && operationStageName !== SLAUGHTER) {
+      if (transferredCows.length > 0 && operationStageName !== FEEDLOT) {
         setNextOperationalModel((prevNextModel) => {
           const newNextModel = new OperationModel(
             configInputs.initial_weight,

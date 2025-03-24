@@ -8,6 +8,7 @@ Chart.register(...registerables, CategoryScale);
 import styles from "./Simulation.module.css";
 import { Typography } from "antd";
 const { Title, Paragraph } = Typography;
+import CowIcon from "./CowIcon";
 
 const useDebouncedCallback = (callback, delay) => {
   const timeoutRef = useRef(null);
@@ -250,18 +251,7 @@ const Simulation = (props) => {
         }}
       >
         {operationModel.cows.map((cow) => (
-          <div
-            key={cow.id}
-            style={{
-              position: "absolute",
-              top: `${cow.location.y}%`,
-              left: `${cow.location.x}%`,
-              width: `${cow.weight / 25}px`,
-              height: `${cow.weight / 25}px`,
-              borderRadius: "50%",
-              backgroundColor: "brown",
-            }}
-          ></div>
+          <CowIcon key={cow.id} cow={cow}></CowIcon>
         ))}
       </div>
       <div
