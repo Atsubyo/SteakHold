@@ -183,7 +183,7 @@ const Network: React.FC = () => {
 										onClick={() => deleteNetwork(index)}
 									/>
 								</Tooltip>
-								<NetworkSimulator />
+								<NetworkSimulator runningState={runningState} />
 								{index < networks.length - 1 && (
 									<Divider
 										type="vertical"
