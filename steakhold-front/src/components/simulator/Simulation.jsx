@@ -3,6 +3,8 @@ import OperationModel from "./OperationModel";
 import { Button, Drawer, Card, Slider, InputNumber, Flex } from "antd";
 import { Line } from "react-chartjs-2";
 import { Chart, registerables, CategoryScale } from "chart.js";
+import CowIcon from "./CowIcon";
+import styles from "./Simulation.module.css";
 Chart.register(...registerables, CategoryScale);
 
 const useDebouncedCallback = (callback, delay) => {
@@ -65,7 +67,7 @@ const Simulation = (props) => {
 		if (isRunning) return;
 
 		if (day === 0) {
-			for (let i = 0; i < 200; i++) {
+			for (let i = 0; i < configInputs.numCows; i++) {
 				operationModel.addCow();
 			}
 		}
@@ -181,7 +183,7 @@ const Simulation = (props) => {
 	};
 
 	return (
-		<div>
+		<div className={styles.simulationColumn}>
 			<h2>{operationName} Operation Visualizer</h2>
 			<div
 				style={{
@@ -192,18 +194,19 @@ const Simulation = (props) => {
 				}}
 			>
 				{cows.map((cow) => (
-					<div
-						key={cow.id}
-						style={{
-							position: "absolute",
-							top: `${cow.location.y}%`,
-							left: `${cow.location.x}%`,
-							width: `${cow.weight / 25}px`,
-							height: `${cow.weight / 25}px`,
-							backgroundColor: cow.health > 0 ? "green" : "red", // Green for healthy, red for dead
-							borderRadius: "50%",
-						}}
-					></div>
+					<CowIcon key={cow.id} cow={cow} />
+					// <div
+					// 	key={cow.id}
+					// 	style={{
+					// 		position: "absolute",
+					// 		top: `${cow.location.y}%`,
+					// 		left: `${cow.location.x}%`,
+					// 		width: `${cow.weight / 25}px`,
+					// 		height: `${cow.weight / 25}px`,
+					// 		backgroundColor: cow.health > 0 ? "green" : "red", // Green for healthy, red for dead
+					// 		borderRadius: "50%",
+					// 	}}
+					// ></div>
 				))}
 			</div>
 

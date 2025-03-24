@@ -1,0 +1,41 @@
+.container {
+	background-color: var(--background);
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	overflow-x: auto;
+}
+
+.setupHeader {
+	width: 100dvw;
+}
+
+.simulationController {
+	margin-inline: 1rem;
+	min-width: 175px;
+}
+
+.scrollContainer {
+	overflow-x: auto;
+	white-space: nowrap;
+	padding-bottom: 1rem;
+	width: 100%;
+}
+
+.networkFlex {
+	min-width: max-content;
+}
+
+.networkContainer {
+	min-height: 600px;
+}
+
+.headerSpacer {
+	max-width: 150px;
+}
+
+.networkSelectMenu {
+	margin-inline: 0.5rem;
+	background: var(--background);
+	min-width: 175px;
+}

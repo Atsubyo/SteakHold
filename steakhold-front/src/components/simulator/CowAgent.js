@@ -19,13 +19,13 @@ class CowAgent {
 
   move() {
     this.location.x = Math.min(
-      Math.max(this.location.x + (Math.random() - 0.5) * 10, 0),
-      97
-    );
-    this.location.y = Math.min(
-      Math.max(this.location.y + (Math.random() - 0.5) * 10, 0),
-      97
-    );
+			Math.max(this.location.x + (Math.random() - 0.5) * 10, 0),
+			100
+		);
+		this.location.y = Math.min(
+			Math.max(this.location.y + (Math.random() - 0.5) * 10, 0),
+			100
+		);
   }
 }
 
