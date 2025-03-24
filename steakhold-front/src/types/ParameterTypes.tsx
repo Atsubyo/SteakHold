@@ -9,4 +9,9 @@ export type OptimizerType =
 	| "Analytics"
 	| "Cattle Futures";
 
-export type BeefStageType = "Cow Calf" | "Stocker" | "Feedlot" | "Retail";
+export type BeefStageType =
+	| "Network"
+	| "Cow Calf"
+	| "Stocker"
+	| "Feedlot"
+	| "Retail";

@@ -3,6 +3,7 @@ import { useState, useCallback, useRef } from "react";
 import OperationModel from "./OperationModel.js";
 import { Button, Drawer, Card, Slider, InputNumber, Flex } from "antd";
 import styles from "./Simulation.module.css";
+import CowIcon from "./CowIcon.tsx";
 
 const COW_CALF = "cow_calf";
 const SLAUGHTER = "slaughter";
@@ -36,7 +37,6 @@ const OperationVisualizer = (props) => {
       stopSimulation();
     }
     if (isRunning) {
-      console.log("Starting simulation!");
       startSimulation();
     }
   }, [isRunning, isFinished]);
@@ -49,10 +49,7 @@ const OperationVisualizer = (props) => {
   };
   const stepSimulation = () => {
     if (operationStageName === COW_CALF && !initialized.current) {
-      console.log("Stepping in simulation: ", operationStageName);
-      console.log("num_cows: ", configInputs.num_cows);
       for (let i = 0; i < configInputs.num_cows; i++) {
-        console.log(`Adding cow: #${i}`);
         operationModel.addCow();
       }
       initialized.current = true;
@@ -69,8 +66,7 @@ const OperationVisualizer = (props) => {
       Object.assign(newModel, prevModel);
       let transferredCows = newModel.step();
       if (transferredCows.length > 0 && operationStageName !== SLAUGHTER) {
-        console.log(transferredCows);
-        setNextOperationalModel((prevModel) => {
+        setNextOperationalModel((prevNextModel) => {
           const newNextModel = new OperationModel(
             configInputs.initial_weight,
             configInputs.num_cows,
@@ -79,10 +75,11 @@ const OperationVisualizer = (props) => {
             configInputs.max_days,
             configInputs.sale_price
           );
-          Object.assign(newNextModel, prevModel);
+          Object.assign(newNextModel, prevNextModel);
           transferredCows.forEach((cow) => {
             newNextModel.addCow(cow);
           });
+          return newNextModel;
         });
       }
       return newModel;
@@ -171,18 +168,7 @@ const OperationVisualizer = (props) => {
         }}
       >
         {operationModel.cows.map((cow) => (
-          <div
-            key={cow.id}
-            style={{
-              position: "absolute",
-              top: `${cow.location.y}%`,
-              left: `${cow.location.x}%`,
-              width: `${cow.weight / 25}px`,
-              height: `${cow.weight / 25}px`,
-              borderRadius: "50%",
-              backgroundColor: "brown",
-            }}
-          ></div>
+          <CowIcon key={cow.id} cow={cow} />
         ))}
         <div
           style={{

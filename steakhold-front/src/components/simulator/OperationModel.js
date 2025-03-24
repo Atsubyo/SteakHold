@@ -49,7 +49,6 @@ class OperationModel {
       cow.move();
 
       if (cow.weight >= this.target_weight) {
-        console.log("Cow #", cow.id, " reached weight: ", this.target_weight);
         transferCows.push(cow);
       } else {
         remainingCows.push(cow);
