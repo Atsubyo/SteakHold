@@ -12,6 +12,8 @@ import {
 } from "@/types/NetworkTypes";
 import OperationModel from "@/components/simulator/OperationModel";
 import { BeefStageType } from "@/types/ParameterTypes";
+import OperationVisualizer from "@/components/simulator/OperationVisualizer"
+import { setSourceMapsEnabled } from "process";
 
 interface NetworkSimulatorProps {
 	runningState: RunningStateType;
@@ -24,8 +26,9 @@ const NetworkSimulator: React.FC<NetworkSimulatorProps> = ({
 		useState<CowCalfType>("Select Cow Calf");
 	const [stockerType, setStockerType] = useState<StockerType>("Select Stocker");
 	const [feedlotType, setFeedlotType] = useState<FeedlotType>("Select Feedlot");
-	const [operationModel, setOperationModel] = useState<OperationModel>();
-	const [, setNextOperationModel] = useState<OperationModel | null>();
+	const [cowCalfOperationModel, setCowCalfOperationModel] = useState<OperationModel>(new OperationModel(50, 100, 2, 0.03, 50, 100));
+	const [stockerOperationModel, setStockerOperationModel] = useState<OperationModel>(new OperationModel(150, 100, 2, 0.03, 50, 100));
+	const [feedlotOperationModel, setFeedlotOperationModel] = useState<OperationModel>(new OperationModel(250, 100, 2, 0.03, 50, 100));
 	const [operationStageName, setOperationStageName] =
 		useState<BeefStageType>("Cow Calf");
 
@@ -109,18 +112,6 @@ const NetworkSimulator: React.FC<NetworkSimulatorProps> = ({
 		}
 	};
 
-	const getOperationVisualizerProps: OperationVisualizerProps = () => {
-		return {
-			operationModel: operationModel,
-			setOperationModel: setOperationModel,
-			setNextOperationalModel: setNextOperationModel,
-			operationStageName: operationStageName,
-			operationName: getOperationName(operationStageName),
-			isRunning: runningState === "running",
-			isFinished: runningState === "finished",
-		};
-	};
-
 	return (
 		<Flex className={styles.networkContainer} vertical>
 			<Flex align="center" justify="center">
@@ -164,6 +155,29 @@ const NetworkSimulator: React.FC<NetworkSimulatorProps> = ({
 				</Dropdown>
 			</Flex>
 			<h1>Network Simulator</h1>
+			<OperationVisualizer operationModel={cowCalfOperationModel}
+			setOperationModel={setCowCalfOperationModel}
+			setNextOperationalModel={setStockerOperationModel}
+			operationStageName={"cow_calf"}
+			isRunning={runningState === "running"}
+			isFinished={runningState === "finished"}>
+			</OperationVisualizer>
+			<OperationVisualizer
+				operationModel={stockerOperationModel}
+				setOperationModel={setStockerOperationModel}
+				setNextOperationalModel={setFeedlotOperationModel}
+				operationStageName={"stocker"}
+				isRunning={runningState === "running"}
+				isFinished={runningState === "finished"}
+			></OperationVisualizer>
+			<OperationVisualizer
+				operationModel={feedlotOperationModel}
+				setOperationModel={setFeedlotOperationModel}
+				setNextOperationalModel={null}
+				operationStageName={"feedlot"}
+				isRunning={runningState === "running"}
+				isFinished={runningState === "finished"}
+			></OperationVisualizer>
 		</Flex>
 	);
 };
