@@ -3,8 +3,10 @@ import styles from "./network.module.css";
 import { Flex, Divider, Button, Tooltip, notification } from "antd";
 import {
 	MinusOutlined,
+	PauseOutlined,
 	PlusOutlined,
 	PoweroffOutlined,
+	UndoOutlined,
 } from "@ant-design/icons";
 import { OpenNotificationProps, RunningStateType } from "@/types/NetworkTypes";
 import NetworkSimulator from "./NetworkSimulator";
@@ -70,7 +72,7 @@ const Network: React.FC = () => {
 								shape="round"
 								color="default"
 								variant="outlined"
-								icon={<PoweroffOutlined />}
+								icon={<PauseOutlined />}
 								onClick={() => setRunningState("paused")}
 							>
 								Pause Simulations
@@ -84,7 +86,7 @@ const Network: React.FC = () => {
 								shape="round"
 								color="default"
 								variant="outlined"
-								icon={<PoweroffOutlined />}
+								icon={<UndoOutlined />}
 								onClick={() => setRunningState("not started")}
 							>
 								Reset Simulations
@@ -103,7 +105,7 @@ const Network: React.FC = () => {
 								shape="round"
 								color="default"
 								variant="outlined"
-								icon={<PoweroffOutlined />}
+								icon={<UndoOutlined />}
 								onClick={() => setRunningState("not started")}
 							>
 								Reset Simulations
@@ -138,7 +140,7 @@ const Network: React.FC = () => {
 								shape="round"
 								color="default"
 								variant="outlined"
-								icon={<PoweroffOutlined />}
+								icon={<UndoOutlined />}
 								onClick={() => setRunningState("not started")}
 							>
 								Reset Simulations
