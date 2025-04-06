@@ -18,6 +18,12 @@ const Context = React.createContext({ name: "Default" });
 const Network: React.FC = () => {
 	const [api, contextHolder] = notification.useNotification();
 	const contextValue = useMemo(() => ({ name: "Ant Design" }), []);
+	// const [networkList, setNetworkList] = useState<
+	// 	Array<typeof NetworkSimulator>
+	// >([
+	// 	<NetworkSimulator key={0} runningState={runningState} />,
+	// 	<NetworkSimulator key={1} runningState={runningState} />,
+	// ]);
 	const [networks, setNetworks] = useState<number[]>([0, 1]);
 	const [runningState, setRunningState] =
 		useState<RunningStateType>("not started");
@@ -49,6 +55,10 @@ const Network: React.FC = () => {
 				});
 				return prev;
 			}
+			console.log(
+				"after deleting:",
+				prev.filter((_, index) => index !== indexToRemove)
+			);
 			return prev.filter((_, index) => index !== indexToRemove);
 		});
 	};
@@ -56,7 +66,6 @@ const Network: React.FC = () => {
 	interface RunningStateControlsProp {
 		runningState: RunningStateType;
 	}
-
 	const RunningStateControls: React.FC<RunningStateControlsProp> = ({
 		runningState,
 	}) => {
@@ -174,17 +183,18 @@ const Network: React.FC = () => {
 					style={{ paddingInline: "2rem" }}
 				>
 					<Flex className={styles.networkFlex}>
-						{networks.map((_, index) => (
-							<React.Fragment key={index}>
+						{networks.map((value, index) => (
+							<React.Fragment key={value}>
 								<Tooltip title="Remove Network">
 									<Button
 										shape="circle"
 										color="danger"
 										variant="outlined"
 										icon={<MinusOutlined />}
-										onClick={() => deleteNetwork(index)}
+										onClick={() => deleteNetwork(value)}
 									/>
 								</Tooltip>
+								index: {value}
 								<NetworkSimulator runningState={runningState} />
 								{index < networks.length - 1 && (
 									<Divider
