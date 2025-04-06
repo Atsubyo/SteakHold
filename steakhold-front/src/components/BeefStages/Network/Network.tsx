@@ -18,12 +18,6 @@ const Context = React.createContext({ name: "Default" });
 const Network: React.FC = () => {
 	const [api, contextHolder] = notification.useNotification();
 	const contextValue = useMemo(() => ({ name: "Ant Design" }), []);
-	// const [networkList, setNetworkList] = useState<
-	// 	Array<typeof NetworkSimulator>
-	// >([
-	// 	<NetworkSimulator key={0} runningState={runningState} />,
-	// 	<NetworkSimulator key={1} runningState={runningState} />,
-	// ]);
 	const [networks, setNetworks] = useState<number[]>([0, 1]);
 	const [runningState, setRunningState] =
 		useState<RunningStateType>("not started");
