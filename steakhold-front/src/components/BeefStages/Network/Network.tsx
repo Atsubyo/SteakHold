@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from "react";
 import styles from "./network.module.css";
-import { Flex, Divider, Button, Tooltip, notification } from "antd";
+import { Flex, Divider, Button, Tooltip, notification, Segmented } from "antd";
 import {
 	MinusOutlined,
 	PauseOutlined,
@@ -8,7 +8,11 @@ import {
 	PoweroffOutlined,
 	UndoOutlined,
 } from "@ant-design/icons";
-import { OpenNotificationProps, RunningStateType } from "@/types/NetworkTypes";
+import {
+	NetworkModeType,
+	OpenNotificationProps,
+	RunningStateType,
+} from "@/types/NetworkTypes";
 import NetworkSimulator from "./NetworkSimulator";
 
 const Context = React.createContext({ name: "Default" });
@@ -18,6 +22,7 @@ const Context = React.createContext({ name: "Default" });
 const Network: React.FC = () => {
 	const [api, contextHolder] = notification.useNotification();
 	const contextValue = useMemo(() => ({ name: "Ant Design" }), []);
+	const [networkMode, setNetworkMode] = useState<NetworkModeType>("Compare");
 	const [networks, setNetworks] = useState<number[]>([0, 1]);
 	const [runningState, setRunningState] =
 		useState<RunningStateType>("not started");
@@ -49,6 +54,10 @@ const Network: React.FC = () => {
 				});
 				return prev;
 			}
+			console.log(
+				"after deleting:",
+				prev.filter((_, index) => index !== indexToRemove)
+			);
 			return prev.filter((_, index) => index !== indexToRemove);
 		});
 	};
@@ -56,7 +65,6 @@ const Network: React.FC = () => {
 	interface RunningStateControlsProp {
 		runningState: RunningStateType;
 	}
-
 	const RunningStateControls: React.FC<RunningStateControlsProp> = ({
 		runningState,
 	}) => {
@@ -154,49 +162,71 @@ const Network: React.FC = () => {
 	return (
 		<Context.Provider value={contextValue}>
 			{contextHolder}
-			<div className={styles.container}>
-				<div className={styles.setupHeader}>
-					<RunningStateControls runningState={runningState} />
-					<Tooltip title="Add Network" className={styles.simulationController}>
-						<Button
+			<Flex vertical justify="center">
+				<Flex justify="center" className={styles.networkControl}>
+					<div className={styles.networkSegement}>
+						<Segmented
+							block
 							shape="round"
-							color="default"
-							variant="outlined"
-							icon={<PlusOutlined />}
-							onClick={() => addNetwork()}
-						>
-							Add Network
-						</Button>
-					</Tooltip>
-				</div>
-				<Flex
-					className={styles.scrollContainer}
-					style={{ paddingInline: "2rem" }}
-				>
-					<Flex className={styles.networkFlex}>
-						{networks.map((_, index) => (
-							<React.Fragment key={index}>
-								<Tooltip title="Remove Network">
-									<Button
-										shape="circle"
-										color="danger"
-										variant="outlined"
-										icon={<MinusOutlined />}
-										onClick={() => deleteNetwork(index)}
-									/>
-								</Tooltip>
-								<NetworkSimulator runningState={runningState} />
-								{index < networks.length - 1 && (
-									<Divider
-										type="vertical"
-										style={{ borderColor: "#43260A", height: "auto" }}
-									/>
-								)}
-							</React.Fragment>
-						))}
-					</Flex>
+							options={["Optimizer", "Compare"]}
+							value={networkMode}
+							onChange={(val: NetworkModeType) => setNetworkMode(val)}
+						/>
+					</div>
 				</Flex>
-			</div>
+				{networkMode === "Optimizer" ? (
+					<div className={styles.container}>Network Optimizer</div>
+				) : (
+					<div className={styles.container}>
+						<div className={styles.setupHeader}>
+							<RunningStateControls runningState={runningState} />
+							<Tooltip
+								title="Add Network"
+								className={styles.simulationController}
+							>
+								<Button
+									shape="round"
+									color="default"
+									variant="outlined"
+									icon={<PlusOutlined />}
+									onClick={() => addNetwork()}
+								>
+									Add Network
+								</Button>
+							</Tooltip>
+						</div>
+						<Flex
+							className={styles.scrollContainer}
+							style={{ paddingInline: "2rem" }}
+						>
+							<Flex
+								className={`${styles.networkFlex} ${styles.scrollContainer}`}
+							>
+								{networks.map((value, index) => (
+									<React.Fragment key={value}>
+										<Tooltip title="Remove Network">
+											<Button
+												shape="circle"
+												color="danger"
+												variant="outlined"
+												icon={<MinusOutlined />}
+												onClick={() => deleteNetwork(value)}
+											/>
+										</Tooltip>
+										<NetworkSimulator runningState={runningState} />
+										{index < networks.length - 1 && (
+											<Divider
+												type="vertical"
+												style={{ borderColor: "#43260A", height: "auto" }}
+											/>
+										)}
+									</React.Fragment>
+								))}
+							</Flex>
+						</Flex>
+					</div>
+				)}
+			</Flex>
 		</Context.Provider>
 	);
 };
