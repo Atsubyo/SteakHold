@@ -1,0 +1,41 @@
+import { CowCalfBudgetType, CowCalfExpenseType } from "@/types/NetworkTypes";
+
+export const defaultLHMCowCalf: CowCalfBudgetType & CowCalfExpenseType = {
+	daysInCowCalf: 245,
+	ADGDuringCowCalfPhase: 2,
+	deathLossWean: 0.97,
+	calfSalePrice: 130.0,
+	culledBreedingStockSales: 150.0,
+	vetVaccineDrug: 27.0,
+	labor: 50.0,
+	breeding: 174.0,
+	marketing: 24,
+	utilities: 41.17,
+	machinery: 32.5,
+	interestOnOperating: 19.17,
+	otherFixedCost: 203.0,
+	pastureCropResidue: 204.0,
+	harvestedForage: 121.33,
+	supplements: 46.5,
+	mineral: 22.33,
+};
+
+export const defaultHHMCowCalf: CowCalfBudgetType & CowCalfExpenseType = {
+	daysInCowCalf: 245,
+	ADGDuringCowCalfPhase: 2.25,
+	deathLossWean: 0.98,
+	calfSalePrice: 135.0,
+	culledBreedingStockSales: 150.0,
+	vetVaccineDrug: 32.0,
+	labor: 58.0,
+	breeding: 180.0,
+	marketing: 27.0,
+	utilities: 43.17,
+	machinery: 33.5,
+	interestOnOperating: 21.17,
+	otherFixedCost: 204.0,
+	pastureCropResidue: 219.0,
+	harvestedForage: 126.33,
+	supplements: 49.5,
+	mineral: 24.33,
+};
