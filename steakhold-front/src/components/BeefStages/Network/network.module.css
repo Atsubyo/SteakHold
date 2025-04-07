@@ -1,9 +1,17 @@
+.networkControl {
+	width: 100dvw;
+}
+
+.networkSegement {
+	width: 400px;
+}
+
 .container {
 	background-color: var(--background);
 	display: flex;
 	flex-direction: column;
 	flex-wrap: nowrap;
-	overflow-x: auto;
+	overflow-x: scroll;
 }
 
 .setupHeader {
@@ -16,10 +24,10 @@
 }
 
 .scrollContainer {
-	overflow-x: auto;
-	white-space: nowrap;
+	overflow-x: scroll;
 	padding-bottom: 1rem;
-	width: 100%;
+	width: fit-content;
+	flex-grow: 1;
 }
 
 .networkFlex {
@@ -27,7 +35,7 @@
 }
 
 .networkContainer {
-	min-height: 600px;
+	min-height: 500px;
 }
 
 .headerSpacer {
