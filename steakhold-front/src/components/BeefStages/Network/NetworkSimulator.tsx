@@ -5,29 +5,31 @@ import { ArrowRightOutlined, DownOutlined } from "@ant-design/icons";
 import {
 	CowCalfType,
 	FeedlotType,
-	OperationNameType,
-	OperationVisualizerProps,
+	// OperationNameType,
+	// OperationVisualizerProps,
 	RunningStateType,
 	StockerType,
 } from "@/types/NetworkTypes";
-import OperationModel from "@/components/simulator/OperationModel";
-import { BeefStageType } from "@/types/ParameterTypes";
+// import OperationModel from "@/components/simulator/OperationModel";
+// import { BeefStageType } from "@/types/ParameterTypes";
 
 interface NetworkSimulatorProps {
 	runningState: RunningStateType;
 }
 
-const NetworkSimulator: React.FC<NetworkSimulatorProps> = ({
-	runningState,
-}) => {
+const NetworkSimulator: React.FC<NetworkSimulatorProps> = (
+	{
+		// runningState,
+	}
+) => {
 	const [cowCalfType, setCowCalfType] =
 		useState<CowCalfType>("Select Cow Calf");
 	const [stockerType, setStockerType] = useState<StockerType>("Select Stocker");
 	const [feedlotType, setFeedlotType] = useState<FeedlotType>("Select Feedlot");
-	const [operationModel, setOperationModel] = useState<OperationModel>();
-	const [, setNextOperationModel] = useState<OperationModel | null>();
-	const [operationStageName, setOperationStageName] =
-		useState<BeefStageType>("Cow Calf");
+	// const [operationModel, setOperationModel] = useState<OperationModel>();
+	// const [, setNextOperationModel] = useState<OperationModel | null>();
+	// const [operationStageName, setOperationStageName] =
+	// 	useState<BeefStageType>("Cow Calf");
 
 	const cowCalfTypeKeys: Record<string, CowCalfType> = {
 		"0": "LHM Cow Calf",
@@ -93,33 +95,33 @@ const NetworkSimulator: React.FC<NetworkSimulatorProps> = ({
 		},
 	];
 
-	const getOperationName = (
-		operationStageName: BeefStageType
-	): OperationNameType => {
-		switch (operationStageName) {
-			case "Stocker":
-				return stockerType;
-			case "Feedlot":
-				return feedlotType;
-			case "Cow Calf":
-			case "Retail":
-			case "Network":
-			default:
-				return "LHM Cow Calf";
-		}
-	};
+	// const getOperationName = (
+	// 	operationStageName: BeefStageType
+	// ): OperationNameType => {
+	// 	switch (operationStageName) {
+	// 		case "Stocker":
+	// 			return stockerType;
+	// 		case "Feedlot":
+	// 			return feedlotType;
+	// 		case "Cow Calf":
+	// 		case "Retail":
+	// 		case "Network":
+	// 		default:
+	// 			return "LHM Cow Calf";
+	// 	}
+	// };
 
-	const getOperationVisualizerProps: OperationVisualizerProps = () => {
-		return {
-			operationModel: operationModel,
-			setOperationModel: setOperationModel,
-			setNextOperationalModel: setNextOperationModel,
-			operationStageName: operationStageName,
-			operationName: getOperationName(operationStageName),
-			isRunning: runningState === "running",
-			isFinished: runningState === "finished",
-		};
-	};
+	// const getOperationVisualizerProps: OperationVisualizerProps = () => {
+	// 	return {
+	// 		operationModel: operationModel,
+	// 		setOperationModel: setOperationModel,
+	// 		setNextOperationalModel: setNextOperationModel,
+	// 		operationStageName: operationStageName,
+	// 		operationName: getOperationName(operationStageName),
+	// 		isRunning: runningState === "running",
+	// 		isFinished: runningState === "finished",
+	// 	};
+	// };
 
 	return (
 		<Flex className={styles.networkContainer} vertical>
