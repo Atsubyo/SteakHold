@@ -6,16 +6,9 @@
 	width: 400px;
 }
 
-.container {
-	background-color: var(--background);
-	display: flex;
-	flex-direction: column;
-	flex-wrap: nowrap;
-	overflow-x: scroll;
-}
-
 .setupHeader {
 	width: 100dvw;
+	line-height: 100px;
 }
 
 .simulationController {
@@ -24,10 +17,10 @@
 }
 
 .scrollContainer {
-	overflow-x: scroll;
-	padding-bottom: 1rem;
-	width: fit-content;
-	flex-grow: 1;
+	width: 100dvw;
+	overflow-x: auto;
+	white-space: nowrap;
+	padding-inline: 2rem;
 }
 
 .networkFlex {

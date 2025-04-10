@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import styles from "./network.module.css";
-import { Button, Dropdown, Flex, MenuProps, Space } from "antd";
-import { ArrowRightOutlined, DownOutlined } from "@ant-design/icons";
+import { Button, Dropdown, Flex, MenuProps, Space, Tooltip } from "antd";
+import {
+	ArrowRightOutlined,
+	DownOutlined,
+	MinusOutlined,
+} from "@ant-design/icons";
 import {
 	CowCalfType,
 	FeedlotType,
@@ -15,13 +19,15 @@ import {
 
 interface NetworkSimulatorProps {
 	runningState: RunningStateType;
+	networkID?: number;
+	deleteNetwork?: (networkID: number) => void;
 }
 
-const NetworkSimulator: React.FC<NetworkSimulatorProps> = (
-	{
-		// runningState,
-	}
-) => {
+const NetworkSimulator: React.FC<NetworkSimulatorProps> = ({
+	// runningState,
+	networkID = null,
+	deleteNetwork = null,
+}) => {
 	const [cowCalfType, setCowCalfType] =
 		useState<CowCalfType>("Select Cow Calf");
 	const [stockerType, setStockerType] = useState<StockerType>("Select Stocker");
@@ -126,6 +132,17 @@ const NetworkSimulator: React.FC<NetworkSimulatorProps> = (
 	return (
 		<Flex className={styles.networkContainer} vertical>
 			<Flex align="center" justify="center">
+				{networkID !== null && deleteNetwork !== null ? (
+					<Tooltip title="Remove Network">
+						<Button
+							shape="circle"
+							color="danger"
+							variant="outlined"
+							icon={<MinusOutlined />}
+							onClick={() => deleteNetwork(networkID)}
+						/>
+					</Tooltip>
+				) : null}
 				<Dropdown
 					menu={{ items: cowCalfTypeItem, onClick: CowCalfTypeOnClick }}
 					trigger={["click"]}

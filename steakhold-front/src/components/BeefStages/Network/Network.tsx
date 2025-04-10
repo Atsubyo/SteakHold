@@ -2,7 +2,6 @@ import React, { useMemo, useState } from "react";
 import styles from "./network.module.css";
 import { Flex, Divider, Button, Tooltip, notification, Segmented } from "antd";
 import {
-	MinusOutlined,
 	PauseOutlined,
 	PlusOutlined,
 	PoweroffOutlined,
@@ -45,7 +44,6 @@ const Network: React.FC = () => {
 		setNetworks((prev) => [...prev, prev.length]);
 	};
 	const deleteNetwork = (indexToRemove: number): void => {
-		console.log(indexToRemove);
 		setNetworks((prev) => {
 			if (prev.length < 2) {
 				openNotification({
@@ -54,10 +52,6 @@ const Network: React.FC = () => {
 				});
 				return prev;
 			}
-			console.log(
-				"after deleting:",
-				prev.filter((_, index) => index !== indexToRemove)
-			);
 			return prev.filter((_, index) => index !== indexToRemove);
 		});
 	};
@@ -175,9 +169,9 @@ const Network: React.FC = () => {
 					</div>
 				</Flex>
 				{networkMode === "Optimizer" ? (
-					<div className={styles.container}>Network Optimizer</div>
+					<Flex vertical>Network Optimizer</Flex>
 				) : (
-					<div className={styles.container}>
+					<Flex vertical>
 						<div className={styles.setupHeader}>
 							<RunningStateControls runningState={runningState} />
 							<Tooltip
@@ -185,8 +179,8 @@ const Network: React.FC = () => {
 								className={styles.simulationController}
 							>
 								<Button
-									shape="round"
-									color="default"
+									// shape="round"
+									color="green"
 									variant="outlined"
 									icon={<PlusOutlined />}
 									onClick={() => addNetwork()}
@@ -195,25 +189,15 @@ const Network: React.FC = () => {
 								</Button>
 							</Tooltip>
 						</div>
-						<Flex
-							className={styles.scrollContainer}
-							style={{ paddingInline: "2rem" }}
-						>
-							<Flex
-								className={`${styles.networkFlex} ${styles.scrollContainer}`}
-							>
-								{networks.map((value, index) => (
-									<React.Fragment key={value}>
-										<Tooltip title="Remove Network">
-											<Button
-												shape="circle"
-												color="danger"
-												variant="outlined"
-												icon={<MinusOutlined />}
-												onClick={() => deleteNetwork(value)}
-											/>
-										</Tooltip>
-										<NetworkSimulator runningState={runningState} />
+						<div className={styles.scrollContainer}>
+							<Flex className={styles.networkFlex}>
+								{networks.map((networkID, index) => (
+									<React.Fragment key={networkID}>
+										<NetworkSimulator
+											runningState={runningState}
+											networkID={networkID}
+											deleteNetwork={deleteNetwork}
+										/>
 										{index < networks.length - 1 && (
 											<Divider
 												type="vertical"
@@ -223,8 +207,8 @@ const Network: React.FC = () => {
 									</React.Fragment>
 								))}
 							</Flex>
-						</Flex>
-					</div>
+						</div>
+					</Flex>
 				)}
 			</Flex>
 		</Context.Provider>
