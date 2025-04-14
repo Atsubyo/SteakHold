@@ -23,16 +23,14 @@ const NetworkNode: React.FC<NetworkNodeProps> = ({ name, isOptimal }) => {
 			<Button
 				shape="round"
 				onClick={showModal}
+				size="large"
 				className={styles.optimizerNetworkNode}
 				style={
 					isOptimal
 						? {
 								backgroundColor: "#ffe58f",
-								fontSize: "1rem",
 						  }
-						: {
-								fontSize: "1rem",
-						  }
+						: {}
 				}
 			>
 				{name}
