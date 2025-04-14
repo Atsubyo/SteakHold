@@ -10,12 +10,34 @@
 	background-color: var(--background);
 	display: flex;
 	flex-direction: column;
-	flex-wrap: nowrap;
-	overflow-x: scroll;
 }
 
 .setupHeader {
 	width: 100dvw;
+}
+
+.optimizerWebDiagramContainer {
+	width: 100dvw;
+	min-height: 500px;
+	padding: 2rem;
+}
+
+.optimizerWebDiagramFrame {
+	width: 100%;
+	height: 100%;
+	border: 1px solid black;
+  overflow-x: auto;
+	padding: 2rem;
+}
+
+.optimizerWebDiagramLayer {
+  min-width: 200px;
+	height: 100%;
+}
+
+.optimizerNetworkNode {
+	min-width: 375px;
+	min-height: 80px;
 }
 
 .simulationController {
@@ -23,15 +45,31 @@
 	min-width: 175px;
 }
 
-.scrollContainer {
-	overflow-x: scroll;
-	padding-bottom: 1rem;
-	width: fit-content;
-	flex-grow: 1;
+.networkCompareContainer {
+	width: 100%;
+	min-height: 500px;
+	padding-inline: 2rem;
 }
 
-.networkFlex {
-	min-width: max-content;
+.networkCompareFrame {
+	width: 100%;
+	height: 100%;
+	overflow-x: auto;
+}
+
+.networkCompare {
+  min-width: 600px;
+	height: 100%;
+}
+
+.scrollContainer {
+	width: fit-content;
+	height: 100%;
+  gap: 1rem;
+  padding: 1rem;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
 }
 
 .networkContainer {
