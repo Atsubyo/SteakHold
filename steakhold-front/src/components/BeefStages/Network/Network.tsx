@@ -106,7 +106,6 @@ const Network: React.FC = () => {
 		setNetworks((prev) => [...prev, prev.length]);
 	};
 	const deleteNetwork = (indexToRemove: number): void => {
-		console.log(indexToRemove);
 		setNetworks((prev) => {
 			if (prev.length < 2) {
 				openNotification({
@@ -115,10 +114,6 @@ const Network: React.FC = () => {
 				});
 				return prev;
 			}
-			console.log(
-				"after deleting:",
-				prev.filter((_, index) => index !== indexToRemove)
-			);
 			return prev.filter((_, index) => index !== indexToRemove);
 		});
 	};
@@ -317,7 +312,7 @@ const Network: React.FC = () => {
 						</div>
 						<div className={styles.optimizerWebDiagramContainer}>
 							<div className={styles.optimizerWebDiagramFrame}>
-								<Flex gap={60} className={styles.scrollContainer}>
+								<Flex gap={50} className={styles.scrollContainer}>
 									{Object.entries(networkLayers).map(
 										([layerName, nodes]: [string, NetworkLayerNodeType]) => (
 											<Flex
@@ -325,20 +320,17 @@ const Network: React.FC = () => {
 												vertical
 												align="center"
 												justify="center"
-												gap={75}
+												gap={60}
 												className={styles.optimizerWebDiagramLayer}
 											>
 												{nodes.map(
-													(networkNode: NetworkLayerNodeType[number]) => {
-														console.log(networkNode);
-														return (
-															<NetworkNode
-																key={networkNode.id}
-																name={networkNode.name}
-																isOptimal={networkNode.isOptimal}
-															/>
-														);
-													}
+													(networkNode: NetworkLayerNodeType[number]) => (
+														<NetworkNode
+															key={networkNode.id}
+															name={networkNode.name}
+															isOptimal={networkNode.isOptimal}
+														/>
+													)
 												)}
 											</Flex>
 										)
