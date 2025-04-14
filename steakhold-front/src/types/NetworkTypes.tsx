@@ -28,6 +28,8 @@ export interface NetworkPath {
 	feedLot: FeedlotType;
 }
 
+export type NetworkModeType = "Optimizer" | "Compare";
+
 export type RunningStateType =
 	| "not started"
 	| "running"
@@ -44,4 +46,77 @@ export interface OperationVisualizerProps {
 	operationName: OperationNameType;
 	isRunning: boolean;
 	isFinished: boolean;
+}
+
+export interface CowInventoryType {
+	numberOfHeifers: number;
+	numberOfCows: number;
+	heiferAliveThroughPregnancy: number;
+	cowsAliveThroughPregnancy: number;
+	percentCalfCropHeifers: number;
+	percentCalfCropCows: number;
+	totalNumberCalvesAvailableBeefWeight: number;
+	costYoungBornCalf: number;
+}
+
+export interface CowCalfBudgetType {
+	daysInCowCalf: number;
+	ADGDuringCowCalfPhase: number;
+	deathLossWean: number;
+	calfSalePrice: number;
+	culledBreedingStockSales: number;
+}
+
+export interface StockerBudgetType {
+	daysInStocker: number;
+	ADGDuringStockerPhase: number;
+	deathLoss: number;
+	stockerSalePrice: number;
+}
+
+export interface FeedlotBudgetType {
+	daysInFeedlot: number;
+	feederCattleSalePrice: number;
+}
+
+export interface CowCalfExpenseType {
+	vetVaccineDrug: number;
+	labor: number;
+	breeding: number;
+	marketing: number;
+	utilities: number;
+	machinery: number;
+	interestOnOperating: number;
+	otherFixedCost: number;
+	pastureCropResidue: number;
+	harvestedForage: number;
+	supplements: number;
+	mineral: number;
+}
+
+export interface StockerExpenseType {
+	vetVaccineDrug: number;
+	labor: number;
+	marketing: number;
+	fuelAndEnergy: number;
+	machinery: number;
+	interestOnCattleLoan: number;
+	other: number;
+	winteringBackgroundingCost: number;
+	summerGrazing: number;
+	mineralAndSalt: number;
+}
+
+export interface FeedlotExpenseType {
+	vetVaccineDrug: number;
+	labor: number;
+	marketing: number;
+	fuelAndEnergy: number;
+	machinery: number;
+	interestOnCattleLoan: number;
+	other: number;
+	fixedExpense: number;
+	harvestedForageCost: number;
+	grainSupplement: number;
+	mineral: number;
 }

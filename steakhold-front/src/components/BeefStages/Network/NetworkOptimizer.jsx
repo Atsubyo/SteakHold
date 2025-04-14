@@ -1,0 +1,18 @@
+import {
+  defaultCowInventory,
+  defaultLHMCowCalf,
+  defaultHHMCowCalf,
+  defaultLHMStockerLHMCowCalf,
+  defaultHHMStockerLHMCowCalf,
+  defaultHHMStockerHHMCowCalf,
+  defaultLHMBackgrounderLHMCowCalf,
+  defaultHHMBackgrounderLHMCowCalf,
+  defaultHHMBackgrounderHHMCowCalf,
+  defaultLHMDirectFeedlotLHMStocker,
+  defaultHHMDirectFeedlotLHMStocker,
+  defaultHHMDirectFeedlotHHMStocker,
+  defaultLHMIndirectFeedlotLHMStocker,
+  defaultHHMIndirectFeedlotLHMStocker,
+  defaultHHMIndirectFeedlotHHMStocker,
+  defaultHHMIndirectFeedlotLHMBackgrounder,
+} from "@/stores/operationStores";
