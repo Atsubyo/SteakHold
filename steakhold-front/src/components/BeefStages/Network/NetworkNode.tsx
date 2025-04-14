@@ -41,6 +41,8 @@ const NetworkNode: React.FC<NetworkNodeProps> = ({ name, isOptimal }) => {
 			<Modal
 				title="Basic Modal"
 				open={isModalOpen}
+				closable={false}
+				onCancel={handleOk}
 				footer={[
 					<Button type="primary" key="close" onClick={handleOk}>
 						Close
