@@ -103,7 +103,7 @@ const SimulationResultsTable = ({
       <>
         <Title level={4}>Herd Statistics</Title>
         <Table
-          dataSource={statistics.herdStats}
+          dataSource={statistics?.herdStats}
           columns={columns}
           pagination={false}
           size="small"
@@ -114,7 +114,7 @@ const SimulationResultsTable = ({
 
         <Title level={4}>Economic Analysis</Title>
         <Table
-          dataSource={statistics.economics}
+          dataSource={statistics?.economics}
           columns={columns}
           pagination={false}
           size="small"

@@ -1,6 +1,25 @@
 import React, { useEffect } from "react";
 import { useState, useCallback, useRef } from "react";
 import OperationModel from "./OperationModel.js";
+import {
+  defaultLHMCowCalf,
+  defaultHHMCowCalf,
+  defaultLHMStockerLHMCowCalf,
+  defaultHHMStockerLHMCowCalf,
+  defaultHHMStockerHHMCowCalf,
+  defaultLHMBackgrounderLHMCowCalf,
+  defaultHHMBackgrounderLHMCowCalf,
+  defaultHHMBackgrounderHHMCowCalf,
+  defaultLHMDirectFeedlotLHMStocker,
+  defaultHHMDirectFeedlotLHMStocker,
+  defaultHHMDirectFeedlotHHMStocker,
+  defaultLHMIndirectFeedlotLHMStocker,
+  defaultHHMIndirectFeedlotLHMStocker,
+  defaultHHMIndirectFeedlotHHMStocker,
+  defaultLHMIndirectFeedlotLHMBackgrounder,
+  defaultHHMIndirectFeedlotLHMBackgrounder,
+  defaultHHMIndirectFeedlotHHMBackgrounder,
+} from "@/stores/operationStagePresets";
 import { Button, Drawer, Card, Slider, InputNumber, Flex } from "antd";
 import styles from "./Simulation.module.css";
 import CowIcon from "./CowIcon.tsx";
@@ -26,7 +45,7 @@ const OperationVisualizer = (props) => {
   const initialized = useRef(false);
   const [configInputs, setConfigInputs] = useState({
     initial_weight: operationModel.initial_weight,
-    num_cows: operationModel.num_cows,
+    num_cows: 100,
     growth_rate: operationModel.growth_rate,
     death_rate: operationModel.death_rate,
     max_days: operationModel.max_days,
@@ -56,26 +75,13 @@ const OperationVisualizer = (props) => {
       initialized.current = true;
     }
     setOperationModel((prevModel) => {
-      const newModel = new OperationModel(
-        configInputs.initial_weight,
-        configInputs.num_cows,
-        configInputs.growth_rate,
-        configInputs.death_rate,
-        configInputs.max_days,
-        configInputs.sale_price
-      );
+      const newModel = new OperationModel(defaultLHMCowCalf);
+      prevModel.network = true;
       Object.assign(newModel, prevModel);
       let transferredCows = newModel.step();
       if (transferredCows.length > 0 && operationStageName !== FEEDLOT) {
         setNextOperationalModel((prevNextModel) => {
-          const newNextModel = new OperationModel(
-            configInputs.initial_weight,
-            configInputs.num_cows,
-            configInputs.growth_rate,
-            configInputs.death_rate,
-            configInputs.max_days,
-            configInputs.sale_price
-          );
+          const newNextModel = new OperationModel(defaultLHMCowCalf);
           Object.assign(newNextModel, prevNextModel);
           transferredCows.forEach((cow) => {
             newNextModel.addCow(cow);
@@ -95,16 +101,7 @@ const OperationVisualizer = (props) => {
     if (intervalId) {
       clearInterval(intervalId);
     }
-    setOperationModel(
-      new OperationModel(
-        configInputs.initial_weight,
-        configInputs.num_cows,
-        configInputs.growth_rate,
-        configInputs.death_rate,
-        configInputs.max_days,
-        configInputs.sale_price
-      )
-    );
+    setOperationModel(new OperationModel(defaultLHMCowCalf));
     initialized.current = false;
   };
 

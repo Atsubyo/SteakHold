@@ -1,26 +1,26 @@
 import React from "react";
 import Simulation from "../simulator/Simulation";
+import {
+  defaultLHMStockerLHMCowCalf,
+  defaultHHMStockerLHMCowCalf,
+  defaultHHMStockerHHMCowCalf,
+  defaultLHMBackgrounderLHMCowCalf,
+  defaultHHMBackgrounderLHMCowCalf,
+  defaultHHMBackgrounderHHMCowCalf,
+} from "@/stores/operationStagePresets";
 
 const Stocker = () => {
   return (
     <div style={{display: "flex", justifyContent: "center", margin: "auto", padding: "1rem"}}>
       <Simulation
-        operationName={"Stocker"}
-        initialWeight={50}
+        operationName={"LHM Stocker LHM Cow Calf"}
         numCows={100}
-        growthRate={2}
-        deathLoss={0.03}
-        maxDays={200}
-        salePrice={130}
+        operationPresets={defaultLHMStockerLHMCowCalf}
       />
       <Simulation
-        operationName={"Stocker"}
-        initialWeight={100}
+        operationName={"HHM Stocker HHM Cow Calf"}
         numCows={100}
-        growthRate={2.2}
-        deathLoss={0.01}
-        maxDays={200}
-        salePrice={130}
+        operationPresets={defaultHHMStockerHHMCowCalf} 
       />
     </div>
   );

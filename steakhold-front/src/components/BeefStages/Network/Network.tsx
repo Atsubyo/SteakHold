@@ -14,6 +14,7 @@ import {
 	RunningStateType,
 } from "@/types/NetworkTypes";
 import NetworkSimulator from "./NetworkSimulator";
+import NetworkOptimizer from "./NetworkOptimizer"
 
 const Context = React.createContext({ name: "Default" });
 
@@ -175,7 +176,10 @@ const Network: React.FC = () => {
 					</div>
 				</Flex>
 				{networkMode === "Optimizer" ? (
-					<div className={styles.container}>Network Optimizer</div>
+					<div className={styles.container}><h1>Network Optimizer</h1>
+						<NetworkOptimizer></NetworkOptimizer>
+					</div>
+
 				) : (
 					<div className={styles.container}>
 						<div className={styles.setupHeader}>

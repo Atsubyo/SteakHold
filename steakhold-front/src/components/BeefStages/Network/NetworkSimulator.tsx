@@ -13,7 +13,25 @@ import {
 import OperationModel from "@/components/simulator/OperationModel";
 import { BeefStageType } from "@/types/ParameterTypes";
 import OperationVisualizer from "@/components/simulator/OperationVisualizer"
-import { setSourceMapsEnabled } from "process";
+import {
+	defaultLHMCowCalf,
+	defaultHHMCowCalf,
+	defaultLHMStockerLHMCowCalf,
+	defaultHHMStockerLHMCowCalf,
+	defaultHHMStockerHHMCowCalf,
+	defaultLHMBackgrounderLHMCowCalf,
+	defaultHHMBackgrounderLHMCowCalf,
+	defaultHHMBackgrounderHHMCowCalf,
+	defaultLHMDirectFeedlotLHMStocker,
+	defaultHHMDirectFeedlotLHMStocker,
+	defaultHHMDirectFeedlotHHMStocker,
+	defaultLHMIndirectFeedlotLHMStocker,
+	defaultHHMIndirectFeedlotLHMStocker,
+	defaultHHMIndirectFeedlotHHMStocker,
+	defaultLHMIndirectFeedlotLHMBackgrounder,
+	defaultHHMIndirectFeedlotLHMBackgrounder,
+	defaultHHMIndirectFeedlotHHMBackgrounder,
+  } from "@/stores/operationStagePresets";
 // import OperationModel from "@/components/simulator/OperationModel";
 // import { BeefStageType } from "@/types/ParameterTypes";
 
@@ -30,9 +48,9 @@ const NetworkSimulator: React.FC<NetworkSimulatorProps> = (
 		useState<CowCalfType>("Select Cow Calf");
 	const [stockerType, setStockerType] = useState<StockerType>("Select Stocker");
 	const [feedlotType, setFeedlotType] = useState<FeedlotType>("Select Feedlot");
-	const [cowCalfOperationModel, setCowCalfOperationModel] = useState<OperationModel>(new OperationModel(50, 100, 2, 0.03, 50, 100));
-	const [stockerOperationModel, setStockerOperationModel] = useState<OperationModel>(new OperationModel(150, 100, 2, 0.03, 50, 100));
-	const [feedlotOperationModel, setFeedlotOperationModel] = useState<OperationModel>(new OperationModel(250, 100, 2, 0.03, 50, 100));
+	const [cowCalfOperationModel, setCowCalfOperationModel] = useState<OperationModel>(new OperationModel(defaultLHMCowCalf));
+	const [stockerOperationModel, setStockerOperationModel] = useState<OperationModel>(new OperationModel(defaultLHMStockerLHMCowCalf));
+	const [feedlotOperationModel, setFeedlotOperationModel] = useState<OperationModel>(new OperationModel(defaultLHMIndirectFeedlotLHMStocker));
 	const [operationStageName, setOperationStageName] =
 		useState<BeefStageType>("Cow Calf");
 	// const [operationModel, setOperationModel] = useState<OperationModel>();
@@ -143,7 +161,7 @@ const NetworkSimulator: React.FC<NetworkSimulatorProps> = (
 					<Button onClick={(e) => e.preventDefault()}>
 						<Space>
 							{cowCalfType}
-							<DownOutlined />
+							<DownOutlined/>
 						</Space>
 					</Button>
 				</Dropdown>

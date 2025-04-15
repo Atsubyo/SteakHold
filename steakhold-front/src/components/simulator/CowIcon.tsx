@@ -7,7 +7,7 @@ interface CowIconProps {
 }
 
 const CowIcon: React.FC<CowIconProps> = ({ cow }) => {
-	const iconSize = cow.weight / 5;
+	const iconSize = cow.weight / 10;
 	const cowPos: CoordinateXYType = {
 		x: ((500 - iconSize) / 500) * cow.location.x,
 		y: ((500 - iconSize) / 500) * cow.location.y,

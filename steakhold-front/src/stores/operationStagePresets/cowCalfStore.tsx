@@ -1,9 +1,10 @@
 import { CowCalfBudgetType, CowCalfExpenseType } from "@/types/NetworkTypes";
 
 export const defaultLHMCowCalf: CowCalfBudgetType & CowCalfExpenseType = {
+	initialWeight: 50,
 	daysInCowCalf: 245,
 	ADGDuringCowCalfPhase: 2,
-	deathLossWean: 0.97,
+	deathLossWean: 0.03,
 	calfSalePrice: 130.0,
 	culledBreedingStockSales: 150.0,
 	vetVaccineDrug: 27.0,
@@ -21,9 +22,10 @@ export const defaultLHMCowCalf: CowCalfBudgetType & CowCalfExpenseType = {
 };
 
 export const defaultHHMCowCalf: CowCalfBudgetType & CowCalfExpenseType = {
+	initialWeight: 50,
 	daysInCowCalf: 245,
-	ADGDuringCowCalfPhase: 2,
-	deathLossWean: 0.98,
+	ADGDuringCowCalfPhase: 2.25,
+	deathLossWean: 0.02,
 	calfSalePrice: 135.0,
 	culledBreedingStockSales: 150.0,
 	vetVaccineDrug: 32.0,

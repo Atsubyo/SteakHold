@@ -1,27 +1,69 @@
 import CowAgent from "./CowAgent";
 
+// need to add "initial weights" to each node
+// need to add "ADG" to each feedlot node
+// support root
+
 class OperationModel {
-  constructor(
-    initial_weight,
-    num_cows,
-    growth_rate,
-    death_rate,
-    max_days,
-    sale_price
-  ) {
+  constructor(config) {
+    const {
+      initialWeight,
+      daysInCowCalf,
+      daysInStocker,
+      daysInFeedlot,
+      ADGDuringCowCalfPhase,
+      ADGDuringStockerPhase,
+      ADGDuringFeedlotPhase,
+      deathLossWean,
+      deathLoss, // same name for both stocker and feedlot
+      calfSalePrice,
+      stockerSalePrice,
+      feederCattleSalePrice,
+      culledBreedingStockSales,
+      ...expenses
+    } = config;
+
+    this.network = false;
+
+    // Determine the phase from which the model is constructed
+    const isCowCalf = "daysInCowCalf" in config;
+    const isStocker = "daysInStocker" in config;
+    const isFeedlot = "daysInFeedlot" in config;
+
     this.cows = [];
+    this.num_cows = 0;
     this.dead_cows = 0;
     this.sold_cows = 0;
     this.revenue = 0;
-    this.expenses = 0;
-    this.initial_weight = initial_weight;
-    this.num_cows = num_cows;
-    this.growth_rate = growth_rate / 2;
-    this.death_rate = death_rate;
-    this.daily_death_rate = 1 - Math.pow(1 - death_rate, 1 / max_days);
-    this.max_days = max_days;
-    this.target_weight = max_days * growth_rate + initial_weight;
-    this.sale_price = sale_price;
+
+    // Sum all numeric expenses to estimate total expenses per cow
+    this.expenses = Object.values(expenses)
+      .filter((v) => typeof v === "number")
+      .reduce((sum, val) => sum + val, 0);
+
+    this.initial_weight = initialWeight; // Can be parameterized if needed
+
+    this.growth_rate = isCowCalf
+      ? ADGDuringCowCalfPhase
+      : isStocker
+      ? ADGDuringStockerPhase
+      : isFeedlot
+      ? ADGDuringFeedlotPhase
+      : 2; // Default
+    this.max_days = daysInCowCalf || daysInStocker || daysInFeedlot || 200;
+
+    const raw_death_rate = deathLossWean ?? deathLoss ?? 0.02; // Default to 2% if undefined
+    this.death_rate = 1 - Math.pow(1 - raw_death_rate, 1 / this.max_days);
+    this.raw_death_rate = raw_death_rate;
+
+    this.sale_price =
+      calfSalePrice ?? stockerSalePrice ?? feederCattleSalePrice ?? 100;
+
+    this.target_weight = this.initial_weight + this.max_days * this.growth_rate;
+  }
+
+  setDailyDeathRate(death_rate) {
+    this.death_rate = 1 - Math.pow(1 - death_rate, 1 / this.max_days);
   }
 
   addCow(cow = null) {
@@ -39,7 +81,7 @@ class OperationModel {
     for (let i = 0; i < this.cows.length; i++) {
       const cow = this.cows[i];
 
-      if (this.daily_death_rate > Math.random()) {
+      if (this.death_rate > Math.random()) {
         cow.die();
         this.dead_cows++;
         continue;
@@ -48,7 +90,7 @@ class OperationModel {
       cow.grow(this.growth_rate);
       cow.move();
 
-      if (cow.weight >= this.target_weight) {
+      if (this.network && cow.weight >= this.target_weight) {
         transferCows.push(cow);
       } else {
         remainingCows.push(cow);
@@ -58,6 +100,10 @@ class OperationModel {
     this.cows = remainingCows;
     return transferCows;
   }
+
+  efficiency() {}
+
+  costPerMillionTon() {}
 
   sellCow(id) {
     for (let i = 0; i < this.cows.length; i++) {

@@ -60,26 +60,20 @@ const initialChartData = [
 ];
 
 const Simulation = (props) => {
-  const LHM = [
-    props.initialWeight,
-    props.numCows,
-    props.growthRate,
-    props.deathLoss,
-    props.maxDays,
-    props.salePrice,
-  ];
+  const operationPresets = props.operationPresets;
+  const [operationModel, setOperationModel] = useState(
+    new OperationModel(operationPresets)
+  );
   const [configInputs, setConfigInputs] = useState({
-    initialWeight: props.initialWeight,
+    initialWeight: operationModel.initial_weight,
     numCows: props.numCows,
-    growthRate: props.growthRate,
-    deathLoss: props.deathLoss,
-    maxDays: props.maxDays,
-    salePrice: props.salePrice,
+    growthRate: operationModel.growth_rate,
+    deathLoss: operationModel.raw_death_rate,
+    maxDays: operationModel.max_days,
+    salePrice: operationModel.sale_price,
   });
   const operationName = props.operationName || "Low Health Management Cow Calf";
-  const [operationModel, setOperationModel] = useState(
-    new OperationModel(...LHM)
-  );
+
   const [day, setDay] = useState(0);
   const [isFinished, setIsFinished] = useState(false);
   const [isRunning, setIsRunning] = useState(false);
@@ -100,9 +94,9 @@ const Simulation = (props) => {
   };
   const stepSimulation = (currentIntervalId = null) => {
     if (day === 0 && !initialized.current) {
-      console.log(`On day ${day}`);
+      // console.log(`On day ${day}`);
       for (let i = 0; i < configInputs.numCows; i++) {
-        console.log(`Adding cow: #${i}`);
+        // console.log(`Adding cow: #${i}`);
         operationModel.addCow();
       }
       initialized.current = true;
@@ -117,14 +111,9 @@ const Simulation = (props) => {
       }
 
       setOperationModel((prevModel) => {
-        const newModel = new OperationModel(
-          configInputs.initialWeight,
-          configInputs.numCows,
-          configInputs.growthRate,
-          configInputs.deathLoss,
-          configInputs.maxDays,
-          configInputs.salePrice
-        );
+        const newModel = new OperationModel(operationPresets);
+        prevModel.setDailyDeathRate(configInputs.deathLoss);
+        prevModel.growth_rate = configInputs.growthRate;
         Object.assign(newModel, prevModel);
         newModel.step();
         setChartData((prevData) => {
@@ -160,7 +149,9 @@ const Simulation = (props) => {
                     ...prevData[1].datasets[1].data,
                     (prevData[1].datasets[1].data.length > 0
                       ? prevData[1].datasets[1].data.at(-1)
-                      : 0) + newModel.cows.length,
+                      : 0) +
+                      (newModel.cows.length * newModel.expenses) /
+                        newModel.max_days,
                   ],
                   borderColor: "yellow",
                   fill: false,
@@ -185,16 +176,8 @@ const Simulation = (props) => {
       clearInterval(intervalId);
       setIsFinished(false);
     }
-    setOperationModel(
-      new OperationModel(
-        configInputs.initialWeight,
-        configInputs.numCows,
-        configInputs.growthRate,
-        configInputs.deathLoss,
-        configInputs.maxDays,
-        configInputs.salePrice
-      )
-    );
+
+    setOperationModel(new OperationModel(operationPresets));
     setDay(0);
     setIsRunning(false);
     setChartData(initialChartData);
