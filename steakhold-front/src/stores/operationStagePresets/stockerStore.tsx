@@ -2,6 +2,7 @@ import { StockerBudgetType, StockerExpenseType } from "@/types/NetworkTypes";
 
 export const defaultLHMStockerLHMCowCalf: StockerBudgetType &
 	StockerExpenseType = {
+	initialWeight: 523.8,
 	daysInStocker: 200,
 	ADGDuringStockerPhase: 1,
 	deathLoss: 0.03,
@@ -20,6 +21,7 @@ export const defaultLHMStockerLHMCowCalf: StockerBudgetType &
 
 export const defaultHHMStockerLHMCowCalf: StockerBudgetType &
 	StockerExpenseType = {
+	initialWeight: 523.8,
 	daysInStocker: 200,
 	ADGDuringStockerPhase: 1.5,
 	deathLoss: 0.025,
@@ -38,6 +40,7 @@ export const defaultHHMStockerLHMCowCalf: StockerBudgetType &
 
 export const defaultHHMStockerHHMCowCalf: StockerBudgetType &
 	StockerExpenseType = {
+	initialWeight: 589.225,
 	daysInStocker: 200,
 	ADGDuringStockerPhase: 2,
 	deathLoss: 0.02,
@@ -56,6 +59,7 @@ export const defaultHHMStockerHHMCowCalf: StockerBudgetType &
 
 export const defaultLHMBackgrounderLHMCowCalf: StockerBudgetType &
 	StockerExpenseType = {
+	initialWeight: 523.8,
 	daysInStocker: 200,
 	ADGDuringStockerPhase: 1,
 	deathLoss: 0.03,
@@ -74,6 +78,7 @@ export const defaultLHMBackgrounderLHMCowCalf: StockerBudgetType &
 
 export const defaultHHMBackgrounderLHMCowCalf: StockerBudgetType &
 	StockerExpenseType = {
+	initialWeight: 523.8,
 	daysInStocker: 200,
 	ADGDuringStockerPhase: 1.5,
 	deathLoss: 0.025,
@@ -92,6 +97,7 @@ export const defaultHHMBackgrounderLHMCowCalf: StockerBudgetType &
 
 export const defaultHHMBackgrounderHHMCowCalf: StockerBudgetType &
 	StockerExpenseType = {
+	initialWeight: 589.225,
 	daysInStocker: 200,
 	ADGDuringStockerPhase: 2,
 	deathLoss: 0.02,

@@ -15,10 +15,13 @@ import {
 	defaultLHMIndirectFeedlotLHMStocker,
 	defaultHHMIndirectFeedlotLHMStocker,
 	defaultHHMIndirectFeedlotHHMStocker,
+	defaultLHMIndirectFeedlotLHMBackgrounder,
 	defaultHHMIndirectFeedlotLHMBackgrounder,
+	defaultHHMIndirectFeedlotHHMBackgrounder,
 } from "./feedlotStore";
 
 const defaultCowInventory: CowInventoryType = {
+	initialWeight: 50,
 	numberOfHeifers: 10000000,
 	numberOfCows: 20000000,
 	heiferAliveThroughPregnancy: 1,
@@ -45,5 +48,7 @@ export {
 	defaultLHMIndirectFeedlotLHMStocker,
 	defaultHHMIndirectFeedlotLHMStocker,
 	defaultHHMIndirectFeedlotHHMStocker,
+	defaultLHMIndirectFeedlotLHMBackgrounder,
 	defaultHHMIndirectFeedlotLHMBackgrounder,
+	defaultHHMIndirectFeedlotHHMBackgrounder,
 };

@@ -1,3 +1,11 @@
+.contentCol {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    row-gap: 0;
+    margin: 0rem 1rem;
+}
 .simulationColumn {
 	display: flex;
 	flex-direction: column;

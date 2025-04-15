@@ -49,6 +49,7 @@ export interface OperationVisualizerProps {
 }
 
 export interface CowInventoryType {
+	initialWeight: number;
 	numberOfHeifers: number;
 	numberOfCows: number;
 	heiferAliveThroughPregnancy: number;
@@ -60,6 +61,7 @@ export interface CowInventoryType {
 }
 
 export interface CowCalfBudgetType {
+	initialWeight: number;
 	daysInCowCalf: number;
 	ADGDuringCowCalfPhase: number;
 	deathLossWean: number;
@@ -68,6 +70,7 @@ export interface CowCalfBudgetType {
 }
 
 export interface StockerBudgetType {
+	initialWeight: number;
 	daysInStocker: number;
 	ADGDuringStockerPhase: number;
 	deathLoss: number;
@@ -75,7 +78,10 @@ export interface StockerBudgetType {
 }
 
 export interface FeedlotBudgetType {
+	initialWeight: number;
 	daysInFeedlot: number;
+	ADGDuringFeedlotPhase: number;
+	deathLoss: number;
 	feederCattleSalePrice: number;
 }
 
