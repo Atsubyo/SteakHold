@@ -11,7 +11,6 @@ import {
 	StockerType,
 } from "@/types/NetworkTypes";
 import OperationModel from "@/components/simulator/OperationModel";
-import { BeefStageType } from "@/types/ParameterTypes";
 import OperationVisualizer from "@/components/simulator/OperationVisualizer"
 import {
 	defaultLHMCowCalf,
