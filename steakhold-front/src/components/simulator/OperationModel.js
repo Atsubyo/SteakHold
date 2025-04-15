@@ -60,6 +60,7 @@ class OperationModel {
       calfSalePrice ?? stockerSalePrice ?? feederCattleSalePrice ?? 100;
 
     this.target_weight = this.initial_weight + this.max_days * this.growth_rate;
+    this.culledBreedingStockSales = culledBreedingStockSales;
   }
 
   setDailyDeathRate(death_rate) {
@@ -101,9 +102,7 @@ class OperationModel {
     return transferCows;
   }
 
-  efficiency() {
-    console.log(culledBreedingStockSales);
-  }
+  efficiency() {}
 
   costPerMillionTon() {}
 

@@ -72,8 +72,6 @@ const NetworkSimulator: React.FC<NetworkSimulatorProps> = (
 	const [cowCalfOperationModel, setCowCalfOperationModel] = useState<OperationModel>(new OperationModel(presets[0]));
 	const [stockerOperationModel, setStockerOperationModel] = useState<OperationModel>(new OperationModel(defaultLHMStockerLHMCowCalf));
 	const [feedlotOperationModel, setFeedlotOperationModel] = useState<OperationModel>(new OperationModel(defaultLHMIndirectFeedlotLHMStocker));
-	const [operationStageName, setOperationStageName] =
-		useState<BeefStageType>("Cow Calf");
 	// const [operationModel, setOperationModel] = useState<OperationModel>();
 	// const [, setNextOperationModel] = useState<OperationModel | null>();
 	// const [operationStageName, setOperationStageName] =
