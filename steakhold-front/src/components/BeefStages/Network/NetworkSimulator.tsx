@@ -44,11 +44,32 @@ const NetworkSimulator: React.FC<NetworkSimulatorProps> = (
 		runningState,
 	}
 ) => {
+
+	const presets = [
+		defaultLHMCowCalf,
+		defaultHHMCowCalf,
+		defaultLHMStockerLHMCowCalf,
+		defaultHHMStockerLHMCowCalf,
+		defaultHHMStockerHHMCowCalf,
+		defaultLHMBackgrounderLHMCowCalf,
+		defaultHHMBackgrounderLHMCowCalf,
+		defaultHHMBackgrounderHHMCowCalf,
+		defaultLHMDirectFeedlotLHMStocker,
+		defaultHHMDirectFeedlotLHMStocker,
+		defaultHHMDirectFeedlotHHMStocker,
+		defaultLHMIndirectFeedlotLHMStocker,
+		defaultHHMIndirectFeedlotLHMStocker,
+		defaultHHMIndirectFeedlotHHMStocker,
+		defaultLHMIndirectFeedlotLHMBackgrounder,
+		defaultHHMIndirectFeedlotLHMBackgrounder,
+		defaultHHMIndirectFeedlotHHMBackgrounder,
+	];
+	
 	const [cowCalfType, setCowCalfType] =
 		useState<CowCalfType>("Select Cow Calf");
 	const [stockerType, setStockerType] = useState<StockerType>("Select Stocker");
 	const [feedlotType, setFeedlotType] = useState<FeedlotType>("Select Feedlot");
-	const [cowCalfOperationModel, setCowCalfOperationModel] = useState<OperationModel>(new OperationModel(defaultLHMCowCalf));
+	const [cowCalfOperationModel, setCowCalfOperationModel] = useState<OperationModel>(new OperationModel(presets[0]));
 	const [stockerOperationModel, setStockerOperationModel] = useState<OperationModel>(new OperationModel(defaultLHMStockerLHMCowCalf));
 	const [feedlotOperationModel, setFeedlotOperationModel] = useState<OperationModel>(new OperationModel(defaultLHMIndirectFeedlotLHMStocker));
 	const [operationStageName, setOperationStageName] =
@@ -57,6 +78,7 @@ const NetworkSimulator: React.FC<NetworkSimulatorProps> = (
 	// const [, setNextOperationModel] = useState<OperationModel | null>();
 	// const [operationStageName, setOperationStageName] =
 	// 	useState<BeefStageType>("Cow Calf");
+	
 
 	const cowCalfTypeKeys: Record<string, CowCalfType> = {
 		"0": "LHM Cow Calf",

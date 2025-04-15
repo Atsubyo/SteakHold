@@ -101,7 +101,9 @@ class OperationModel {
     return transferCows;
   }
 
-  efficiency() {}
+  efficiency() {
+    console.log(culledBreedingStockSales);
+  }
 
   costPerMillionTon() {}
 
