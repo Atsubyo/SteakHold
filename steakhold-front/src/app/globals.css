@@ -1,16 +1,10 @@
 :root {
   --background: #FFF7EA;
+  --background2: #fffbf5;
   --foreground: #603000;
   --emphasis: #43260A;
   --header-size: 40px;
 }
-
-/* @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-} */
 
 html,
 body {
@@ -36,9 +30,3 @@ a {
   color: inherit;
   text-decoration: none;
 }
-
-/* @media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-} */

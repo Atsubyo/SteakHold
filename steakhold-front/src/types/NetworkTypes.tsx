@@ -126,3 +126,18 @@ export interface FeedlotExpenseType {
 	grainSupplement: number;
 	mineral: number;
 }
+
+export interface NetworkLayerType {
+	cowCalfInventory: NetworkLayerNodeType;
+	cowCalf: NetworkLayerNodeType;
+	stocker: NetworkLayerNodeType;
+	indirectFeedlot: NetworkLayerNodeType;
+	directFeedlot: NetworkLayerNodeType;
+	slaughter: NetworkLayerNodeType;
+}
+
+export type NetworkLayerNodeType = {
+	id: number;
+	name: string;
+	isOptimal: boolean;
+}[];
