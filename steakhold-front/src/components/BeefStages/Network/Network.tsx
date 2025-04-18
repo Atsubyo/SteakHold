@@ -106,6 +106,7 @@ const Network: React.FC = () => {
 		setNetworks((prev) => [...prev, prev.length]);
 	};
 	const deleteNetwork = (indexToRemove: number): void => {
+		console.log(indexToRemove);
 		setNetworks((prev) => {
 			if (prev.length < 2) {
 				openNotification({
@@ -314,26 +315,28 @@ const Network: React.FC = () => {
 							<div className={styles.optimizerWebDiagramFrame}>
 								<Flex gap={50} className={styles.scrollContainer}>
 									{Object.entries(networkLayers).map(
-										([layerName, nodes]: [string, NetworkLayerNodeType]) => (
-											<Flex
-												key={layerName}
-												vertical
-												align="center"
-												justify="center"
-												gap={60}
-												className={styles.optimizerWebDiagramLayer}
-											>
-												{nodes.map(
-													(networkNode: NetworkLayerNodeType[number]) => (
-														<NetworkNode
-															key={networkNode.id}
-															name={networkNode.name}
-															isOptimal={networkNode.isOptimal}
-														/>
-													)
-												)}
-											</Flex>
-										)
+										([layerName, nodes]: [string, NetworkLayerNodeType]) => {
+											return (
+												<Flex
+													key={layerName}
+													vertical
+													align="center"
+													justify="center"
+													gap={60}
+													className={styles.optimizerWebDiagramLayer}
+												>
+													{nodes.map(
+														(networkNode: NetworkLayerNodeType[number]) => (
+															<NetworkNode
+																key={layerName + networkNode.id}
+																name={networkNode.name}
+																isOptimal={networkNode.isOptimal}
+															/>
+														)
+													)}
+												</Flex>
+											);
+										}
 									)}
 								</Flex>
 							</div>
@@ -363,15 +366,15 @@ const Network: React.FC = () => {
 						<div className={styles.networkCompareContainer}>
 							<div className={styles.networkCompareFrame}>
 								<Flex className={styles.scrollContainer}>
-									{networks.map((value, index) => (
-										<Flex className={styles.networkCompare} key={value}>
+									{networks.map((_, index) => (
+										<Flex className={styles.networkCompare} key={index}>
 											<Tooltip title="Remove Network">
 												<Button
 													shape="circle"
 													color="danger"
 													variant="outlined"
 													icon={<MinusOutlined />}
-													onClick={() => deleteNetwork(value)}
+													onClick={() => deleteNetwork(index)}
 												/>
 											</Tooltip>
 											<NetworkSimulator runningState={runningComparisonState} />

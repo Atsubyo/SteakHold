@@ -46,15 +46,14 @@
 }
 
 .networkCompareContainer {
-	width: 100%;
 	min-height: 500px;
-	padding-inline: 2rem;
 }
 
 .networkCompareFrame {
-	width: 100%;
+	width: 100dvw;
 	height: 100%;
 	overflow-x: auto;
+	padding-inline: 2rem;
 }
 
 .networkCompare {
