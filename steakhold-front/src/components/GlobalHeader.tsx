@@ -54,7 +54,7 @@ const GlobalHeader: React.FC = () => {
 	return (
 		<Flex className={styles.flexContainer} wrap>
 			<hr className={`${styles.line} ${styles.flex1}`} />
-			<div className={styles.agriLifeLogo} />
+			<div data-testid="agrilife-logo" className={styles.agriLifeLogo} />
 			<hr className={`${styles.line} ${styles.flex2}`} />
 			<div className={styles.title} />
 			<hr className={`${styles.line} ${styles.flex3}`} />
