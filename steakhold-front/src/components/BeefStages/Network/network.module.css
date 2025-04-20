@@ -73,6 +73,7 @@
 
 .networkContainer {
 	min-height: 500px;
+	min-width: 825px;
 }
 
 .headerSpacer {
