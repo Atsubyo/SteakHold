@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styles from "./network.module.css";
-import { Button, Dropdown, Flex, MenuProps, Space } from "antd";
+import { Button, Col, Dropdown, Flex, MenuProps, Row, Space } from "antd";
 import { ArrowRightOutlined, DownOutlined } from "@ant-design/icons";
 import {
 	CowCalfType,
@@ -11,7 +11,7 @@ import {
 	StockerType,
 } from "@/types/NetworkTypes";
 import OperationModel from "@/components/simulator/OperationModel";
-import OperationVisualizer from "@/components/simulator/OperationVisualizer"
+import OperationVisualizer from "@/components/simulator/OperationVisualizer";
 import {
 	defaultLHMCowCalf,
 	defaultHHMCowCalf,
@@ -30,7 +30,7 @@ import {
 	defaultLHMIndirectFeedlotLHMBackgrounder,
 	defaultHHMIndirectFeedlotLHMBackgrounder,
 	defaultHHMIndirectFeedlotHHMBackgrounder,
-  } from "@/stores/operationStagePresets";
+} from "@/stores/operationStagePresets";
 // import OperationModel from "@/components/simulator/OperationModel";
 // import { BeefStageType } from "@/types/ParameterTypes";
 
@@ -38,12 +38,9 @@ interface NetworkSimulatorProps {
 	runningState: RunningStateType;
 }
 
-const NetworkSimulator: React.FC<NetworkSimulatorProps> = (
-	{
-		runningState,
-	}
-) => {
-
+const NetworkSimulator: React.FC<NetworkSimulatorProps> = ({
+	runningState,
+}) => {
 	const presets = [
 		defaultLHMCowCalf,
 		defaultHHMCowCalf,
@@ -63,19 +60,23 @@ const NetworkSimulator: React.FC<NetworkSimulatorProps> = (
 		defaultHHMIndirectFeedlotLHMBackgrounder,
 		defaultHHMIndirectFeedlotHHMBackgrounder,
 	];
-	
+
 	const [cowCalfType, setCowCalfType] =
 		useState<CowCalfType>("Select Cow Calf");
 	const [stockerType, setStockerType] = useState<StockerType>("Select Stocker");
 	const [feedlotType, setFeedlotType] = useState<FeedlotType>("Select Feedlot");
-	const [cowCalfOperationModel, setCowCalfOperationModel] = useState<OperationModel>(new OperationModel(presets[0]));
-	const [stockerOperationModel, setStockerOperationModel] = useState<OperationModel>(new OperationModel(defaultLHMStockerLHMCowCalf));
-	const [feedlotOperationModel, setFeedlotOperationModel] = useState<OperationModel>(new OperationModel(defaultLHMIndirectFeedlotLHMStocker));
+	const [cowCalfOperationModel, setCowCalfOperationModel] =
+		useState<OperationModel>(new OperationModel(presets[0]));
+	const [stockerOperationModel, setStockerOperationModel] =
+		useState<OperationModel>(new OperationModel(defaultLHMStockerLHMCowCalf));
+	const [feedlotOperationModel, setFeedlotOperationModel] =
+		useState<OperationModel>(
+			new OperationModel(defaultLHMIndirectFeedlotLHMStocker)
+		);
 	// const [operationModel, setOperationModel] = useState<OperationModel>();
 	// const [, setNextOperationModel] = useState<OperationModel | null>();
 	// const [operationStageName, setOperationStageName] =
 	// 	useState<BeefStageType>("Cow Calf");
-	
 
 	const cowCalfTypeKeys: Record<string, CowCalfType> = {
 		"0": "LHM Cow Calf",
@@ -180,7 +181,7 @@ const NetworkSimulator: React.FC<NetworkSimulatorProps> = (
 					<Button onClick={(e) => e.preventDefault()}>
 						<Space>
 							{cowCalfType}
-							<DownOutlined/>
+							<DownOutlined />
 						</Space>
 					</Button>
 				</Dropdown>
@@ -212,29 +213,42 @@ const NetworkSimulator: React.FC<NetworkSimulatorProps> = (
 				</Dropdown>
 			</Flex>
 			<h1>Network Simulator</h1>
-			<OperationVisualizer operationModel={cowCalfOperationModel}
-			setOperationModel={setCowCalfOperationModel}
-			setNextOperationalModel={setStockerOperationModel}
-			operationStageName={"cow_calf"}
-			isRunning={runningState === "running"}
-			isFinished={runningState === "finished"}>
-			</OperationVisualizer>
-			<OperationVisualizer
-				operationModel={stockerOperationModel}
-				setOperationModel={setStockerOperationModel}
-				setNextOperationalModel={setFeedlotOperationModel}
-				operationStageName={"stocker"}
-				isRunning={runningState === "running"}
-				isFinished={runningState === "finished"}
-			></OperationVisualizer>
-			<OperationVisualizer
-				operationModel={feedlotOperationModel}
-				setOperationModel={setFeedlotOperationModel}
-				setNextOperationalModel={null}
-				operationStageName={"feedlot"}
-				isRunning={runningState === "running"}
-				isFinished={runningState === "finished"}
-			></OperationVisualizer>
+			<>
+				<Row>
+					<Col span={12}>
+						<OperationVisualizer
+							operationModel={cowCalfOperationModel}
+							setOperationModel={setCowCalfOperationModel}
+							setNextOperationalModel={setStockerOperationModel}
+							operationStageName={"cow_calf"}
+							isRunning={runningState === "running"}
+							isFinished={runningState === "finished"}
+						/>
+					</Col>
+					<Col span={12}>
+						<OperationVisualizer
+							operationModel={stockerOperationModel}
+							setOperationModel={setStockerOperationModel}
+							setNextOperationalModel={setFeedlotOperationModel}
+							operationStageName={"stocker"}
+							isRunning={runningState === "running"}
+							isFinished={runningState === "finished"}
+						/>
+					</Col>
+				</Row>
+				<Row>
+					<Col span={12} offset={6}>
+						<OperationVisualizer
+							operationModel={feedlotOperationModel}
+							setOperationModel={setFeedlotOperationModel}
+							setNextOperationalModel={null}
+							operationStageName={"feedlot"}
+							isRunning={runningState === "running"}
+							isFinished={runningState === "finished"}
+						/>
+					</Col>
+				</Row>
+			</>
 		</Flex>
 	);
 };
